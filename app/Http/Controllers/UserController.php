@@ -8,6 +8,7 @@ use Auth;
 use Hash;
 use Session;
 use App\User;
+use App\Post;
 use Validator;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
@@ -211,6 +212,17 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $posts = Post::where('user_id', $id)->delete();
+        
+        //if($user->user_id != Auth::user()->id) return redirect()->route('posts.show', $user->id);
+
+        $name = $user->fname;
+        //$posts->delete();
+        $user->delete();
+
+        Session::flash('success', "<b>$name</b> was successfully deleted.");
+
+        return redirect()->route('users.index');
     }
 }
