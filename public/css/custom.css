@@ -1,0 +1,13 @@
+.btn-margin-top {
+	margin-top: 10px;
+}
+
+.img-profile-xs {
+	width: 20px;
+	height: 20px;
+}
+
+.row > .progress {
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
