@@ -40,7 +40,7 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active">
                     <div class="table-responsive">
-                        <table class="table table-condensed table-hover table-striped">
+                        <table class="table table-condensed table-hover table-striped text-nowrap">
                             <thead>
                                 <tr>
                                     <th class="text-center">Name</th>

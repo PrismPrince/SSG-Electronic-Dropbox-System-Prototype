@@ -32,7 +32,7 @@
                         {!! Form::textarea('desc', old('desc'), [
                             'class' => 'form-control',
                             'required',
-                            'rows' => '10',
+                            'rows' => 7,
                             'data-error' => 'Please enter a valid input!',
                             'placeholder' => 'Enter post description...',
                         ]) !!}

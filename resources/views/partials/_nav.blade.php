@@ -18,6 +18,8 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 <li>{!! Html::link('home', 'Home') !!}</li>
+                <li>{!! Html::link('suggest/create', 'Suggest') !!}</li>
+                <li>{!! Html::link('suggestions', 'Suggestions') !!}</li>
                 <li>{!! Html::link('posts', 'Posts') !!}</li>
                 <li>{!! Html::link('users', 'Users') !!}</li>
             </ul>

@@ -28,8 +28,8 @@ class SuggestionController extends Controller
     public function index()
     {
         $carbon = new Carbon;
-        $suggestion = Suggestion::orderBy('updated_at', 'desc')->paginate(10);
-        return view('suggestions.index')->withSuggestions($suggestion)->withCarbon($carbon);
+        $suggestions = Suggestion::orderBy('updated_at', 'desc')->paginate(10);
+        return view('suggestions.index')->withSuggestions($suggestions)->withCarbon($carbon);
     }
 
     /**
@@ -52,9 +52,9 @@ class SuggestionController extends Controller
     {
         $rules = [
             'student_id' => 'required|digits:7|exists:students,id',
-            'fname' => 'required|exists:students,fname',
-            'mname' => 'required|exists:students,mname',
-            'lname' => 'required|exists:students,lname',
+            'fname' => 'required|exists:students,fname,id,' . $request->student_id,
+            'mname' => 'exists:students,mname,id,' . $request->student_id,
+            'lname' => 'required|exists:students,lname,id,' . $request->student_id,
             'title' => 'required|regex:/[\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}/|max:255',
             'addressed_to' => 'required|regex:/[\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}/|max:255',
             'message' => 'required',
@@ -64,11 +64,10 @@ class SuggestionController extends Controller
             'student_id.required' => 'Please enter a valid ID!',
             'student_id.digits' => 'Input must be seven digits!',
             'student_id.exists' => 'ID number not found!',
-            'fname.required' => 'Please enter a your first name!',
+            'fname.required' => 'Please enter a valid name!',
             'fname.exists' => 'Your first name was not found!',
-            'mname.required' => 'Please enter a your middle name!',
             'mname.exists' => 'Your middle name was not found!',
-            'lname.required' => 'Please enter a your last name!',
+            'lname.required' => 'Please enter a valid name!',
             'lname.exists' => 'Your last name was not found!',
             'title.required' => 'Please enter the title!',
             'title.regex' => 'Some characters are not accepted!',
@@ -81,18 +80,21 @@ class SuggestionController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->fails()) return redirect('suggest')->withErrors($validator)->withInput();
+        if ($validator->fails()) {
+            return redirect('suggest/create')->withErrors($validator)->withInput();
+        }
         else {
+        //return 'success';
             $suggestion = new Suggestion;
             $suggestion->student_id = trim($request->student_id);
             $suggestion->title = trim($request->title);
-            $suggestion->title = trim($request->addressed_to);
+            $suggestion->addressed_to = trim($request->addressed_to);
             $suggestion->message = trim($request->message);
             $suggestion->save();
 
             Session::flash('success', 'Your suggestion was successfully send.');
 
-            return redirect()->route('/');
+            return redirect('/');
         }
     }
 

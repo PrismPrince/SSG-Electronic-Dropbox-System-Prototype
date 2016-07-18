@@ -19,22 +19,13 @@
                 <div class="col-sm-12">
                     @include('partials._alert')
                 </div>
-                <div class="col-sm-10">
-                    <h1 style="margin-top:0">{{ count($posts) == 0 ? 'No Post' : 'Posts' }}</h1>
-                </div>
-                <div class="col-sm-2">
-                    {!! Html::linkRoute('posts.create', 'New Post', [], ['class' => 'btn btn-primary btn-block']) !!}
+                <div class="col-sm-12">
+                    <h1 style="margin-top:0">{{ count($suggestions) == 0 ? 'No Suggestions' : 'Suggestions' }}</h1>
                 </div>
             </div>
             <ul class="nav nav-tabs" role="tablist">
-                <li class="{{  Route::is('posts.index') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('posts.index') }}" role="tab" data-toggel="tab" aria-controls="posts">All Posts</a>
-                </li>
-                <li class="{{ Route::is('posts.other') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('posts.other') }}" role="tab" data-toggel="tab" aria-controls="otherPosts">Other Posts</a>
-                </li>
-                <li class="{{ Route::is('posts.me') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('posts.me') }}" role="tab" data-toggel="tab" aria-controls="myPosts">My Posts</a>
+                <li class="{{  Route::is('suggestions.index') ? 'active' : '' }}" role="presentation">
+                    <a href="{{ route('suggestions.index') }}" role="tab" data-toggel="tab" aria-controls="suggestions">All Suggestions</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -43,31 +34,32 @@
                         <table class="table table-condensed table-hover table-striped text-nowrap">
                             <thead>
                                 <tr>
+                                    <th class="text-center">Student ID</th>
+                                    <th class="text-center">From</th>
+                                    <th class="text-center">To</th>
                                     <th class="text-center">Title</th>
-                                    <th class="text-center">Description</th>
-                                    <th class="text-center">Created at</th>
-                                    <th class="text-center">Updated at</th>
+                                    <th class="text-center">Message</th>
+                                    <th class="text-center">Suggested at</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($posts as $post)
+                                @foreach($suggestions as $suggestion)
                                     <tr>
-                                        <td>{{ substr($post->title, 0, 32) }}{{ strlen($post->title) > 32 ? '...' : '' }}</td>
-                                        <td>{{ substr($post->desc, 0, 67) }}{{ strlen($post->desc) > 67 ? '...' : '' }}</td>
-                                        <td>{{ $carbon->toFormattedDateString($post->created_at) }}</td>
-                                        <td>{{ $carbon->toFormattedDateString($post->updated_at) }}</td>
+                                        <td>{{ $suggestion->student->id }}</td>
+                                        <td>{{ $suggestion->student->fname . ' ' . ($suggestion->student->mname == '' ? '' : $suggestion->student->mname . ' ') . $suggestion->student->lname }}</td>
+                                        <td>{{ substr($suggestion->addressed_to, 0, 32) }}{{ strlen($suggestion->addressed_to) > 32 ? '...' : '' }}</td>
+                                        <td>{{ substr($suggestion->title, 0, 32) }}{{ strlen($suggestion->title) > 32 ? '...' : '' }}</td>
+                                        <td>{{ substr($suggestion->message, 0, 67) }}{{ strlen($suggestion->message) > 67 ? '...' : '' }}</td>
+                                        <td>{{ $carbon->toFormattedDateString($suggestion->created_at) }}</td>
                                         <td class="text-center">
                                             {!! Form::open([
                                                 'method' => 'DELETE',
-                                                'route' => ['posts.destroy', $post->id],
+                                                'route' => ['suggestions.destroy', $suggestion->id],
                                                 'class' => 'form-horizontal'
                                             ]) !!}
-                                            <a href="{{ url('posts/' . $post->id) }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                                            @if($post->user_id == Auth::user()->id)
-                                            <a href="{{ url('posts/' . $post->id . '/edit') }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                                <a href="{{ url('suggestions/' . $suggestion->id) }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                                                 {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs']) !!}
-                                            @endif
                                             {!! Form::close() !!}
                                         </td>
                                     </tr>
@@ -75,7 +67,7 @@
                             </tbody>
                         </table>
                         <div class="col-sm-12 text-center">
-                            {!! $posts->links() !!}
+                            {!! $suggestions->links() !!}
                         </div>
                     </div>
                 </div>
