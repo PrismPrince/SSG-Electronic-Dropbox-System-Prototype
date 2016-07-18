@@ -21,10 +21,10 @@
                         <dl class="col-sm-12">
                             <dt>Author</dt>
                             <dd>{{ $post->user->fname . ' ' . $post->user->lname }}</dd>
-                            <dt>Posted on</dt>
-                            <dd>{{ date('D, M j, Y g:i a', strtotime($post->created_at)) }}</dd>
-                            <dt>Updated on</dt>
-                            <dd>{{ date('D, M j, Y g:i a', strtotime($post->updated_at)) }}</dd>
+                            <dt>Posted</dt>
+                            <dd>{{ $carbon->parse($post->created_at)->diffForHumans() }}</dd>
+                            <dt>Updated</dt>
+                            <dd>{{ $carbon->parse($post->updated_at)->diffForHumans() }}</dd>
                         </dl>
                         @if($post->user->id == Auth::user()->id)
                             <div class="col-md-6">

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
 use Auth;
 use Session;
 use App\Post;
 use Validator;
-use App\Http\Requests;
+use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -27,22 +28,23 @@ class PostController extends Controller
      */
     public function index()
     {
+        $carbon = new Carbon;
         $posts = Post::orderBy('updated_at', 'desc')->paginate(10);
-        return view('posts.index')->withPosts($posts);
+        return view('posts.index')->withPosts($posts)->withCarbon($carbon);
     }
 
     public function me()
     {
+        $carbon = new Carbon;
         $posts = Post::where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(10);
-        //dd($posts);
-        return view('posts.index')->withPosts($posts);
+        return view('posts.index')->withPosts($posts)->withCarbon($carbon);
     }
 
     public function other()
     {
+        $carbon = new Carbon;
         $posts = Post::where('user_id','!=', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(10);
-        //dd($posts);
-        return view('posts.index')->withPosts($posts);
+        return view('posts.index')->withPosts($posts)->withCarbon($carbon);
     }
 
     /**
@@ -65,8 +67,7 @@ class PostController extends Controller
     {
         $rules = [
             'title' => 'required|regex:/[\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}/|max:255',
-            'desc' => 'required',//|regex:/^[\r\n\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}$/',
-            // unique:'table','field','except(the user's id)','PK'
+            'desc' => 'required',
         ];
 
         $messages = [
@@ -101,8 +102,11 @@ class PostController extends Controller
      */
     public function show($id)
     {
+
+        $carbon = new Carbon;
+
         $post = Post::findOrFail($id);
-        return view('posts.show')->withPost($post);
+        return view('posts.show')->withPost($post)->withCarbon($carbon);
     }
 
     /**
@@ -113,9 +117,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+        $carbon = new Carbon;
         $post = Post::findOrFail($id);
         if($post->user_id != Auth::user()->id) return redirect()->route('posts.show', $post->id);
-        return view('posts.edit')->withPost($post);
+        return view('posts.edit')->withPost($post)->withCarbon($carbon);
     }
 
     /**
@@ -129,8 +134,7 @@ class PostController extends Controller
     {
         $rules = [
             'title' => 'required|regex:/[\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}/|max:255',
-            'desc' => 'required',//|regex:/^[\r\n\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}$/',
-            // unique:'table','field','except(the user's id)','PK'
+            'desc' => 'required',
         ];
 
         $messages = [
@@ -143,7 +147,7 @@ class PostController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->fails()) return redirect('posts/create')->withErrors($validator)->withInput();
+        if ($validator->fails()) return redirect('posts/' . $id . '/edit')->withErrors($validator)->withInput();
         else {
             $post = Post::findOrFail($id);
             

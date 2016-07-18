@@ -26,7 +26,6 @@
                     {!! Html::linkRoute('posts.create', 'New Post', [], ['class' => 'btn btn-primary btn-block']) !!}
                 </div>
             </div>
-            @if(count($posts) > 0)
             <ul class="nav nav-tabs" role="tablist">
                 <li class="{{  Route::is('posts.index') ? 'active' : '' }}" role="presentation">
                     <a href="{{ route('posts.index') }}" role="tab" data-toggel="tab" aria-controls="posts">All Posts</a>
@@ -56,8 +55,8 @@
                                     <tr>
                                         <td>{{ substr($post->title, 0, 32) }}{{ strlen($post->title) > 32 ? '...' : '' }}</td>
                                         <td>{{ substr($post->desc, 0, 67) }}{{ strlen($post->desc) > 67 ? '...' : '' }}</td>
-                                        <td>{{ date('M j, Y', strtotime($post->created_at)) }}</td>
-                                        <td>{{ date('M j, Y', strtotime($post->updated_at)) }}</td>
+                                        <td>{{ $carbon->toFormattedDateString($post->created_at) }}</td>
+                                        <td>{{ $carbon->toFormattedDateString($post->updated_at) }}</td>
                                         <td class="text-center">
                                             {!! Form::open([
                                                 'method' => 'DELETE',
@@ -81,7 +80,6 @@
                     </div>
                 </div>
             </div>
-            @endif
         </div>
     </div>
 @endsection

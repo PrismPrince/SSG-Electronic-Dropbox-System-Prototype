@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
+use Auth;
 use Hash;
+use Session;
 use App\User;
 use Validator;
-use Session;
-use App\Http\Requests;
+use Carbon\Carbon;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserController extends Controller
 {
@@ -23,20 +27,23 @@ class UserController extends Controller
      */
     public function index()
     {
+        $carbon = new Carbon;
         $users = User::orderBy('updated_at', 'desc')->paginate(10);
-        return view('users.index')->withUsers($users);
+        return view('users.index')->withUsers($users)->withCarbon($carbon);
     }
 
     public function moderator()
     {
+        $carbon = new Carbon;
         $users = User::where('role', 'moderator')->orderBy('updated_at', 'desc')->paginate(10);
-        return view('users.index')->withUsers($users);
+        return view('users.index')->withUsers($users)->withCarbon($carbon);
     }
 
     public function admin()
     {
+        $carbon = new Carbon;
         $users = User::where('role', 'admin')->orderBy('updated_at', 'desc')->paginate(10);
-        return view('users.index')->withUsers($users);
+        return view('users.index')->withUsers($users)->withCarbon($carbon);
     }
 
     /**
@@ -66,7 +73,6 @@ class UserController extends Controller
             'role' => 'required',
             'password' => 'required|min:6',
             'password_confirm' => 'required|same:password',
-            // unique:'table','field','except(the user's id)','PK'
         ];
 
         $messages = [
@@ -98,9 +104,9 @@ class UserController extends Controller
         if ($validator->fails()) return redirect('users/create')->withErrors($validator)->withInput();
         else {
             $user = new User;
-            $user->fname = trim($request->fname);
-            $user->mname = trim($request->mname);
-            $user->lname = trim($request->lname);
+            $user->fname = ucwords(trim($request->fname));
+            $user->mname = ucwords(trim($request->mname));
+            $user->lname = ucwords(trim($request->lname));
             $user->username = trim($request->username);
             $user->email = trim($request->email);
             $user->role = $request->role;
@@ -121,8 +127,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $carbon = new Carbon;
         $user = User::findOrFail($id);
-        return view('users.show')->withUser($user);
+        return view('users.show')->withUser($user)->withCarbon($carbon);
     }
 
     /**
@@ -133,7 +140,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $carbon = new Carbon;
+        $user = User::findOrFail($id);
+        return view('users.edit')->withUser($user)->withCarbon($carbon);
     }
 
     /**
@@ -145,7 +154,53 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'fname' => 'required|regex:/[\s\-\.A-zÑñ]{1,255}/|max:255',
+            'mname' => 'regex:/[\s\-\.A-zÑñ]{1,255}/|max:255',
+            'lname' => 'required|regex:/[\s\-\.A-zÑñ]{1,255}/|max:255',
+            'username' => 'required|regex:/[\s\_\-\.A-zÑñ]{1,255}/|unique:users,username,' . $id . '|min:6|max:255',
+            'email' => 'required|email|unique:users,email,' . $id . '|max:255',
+            'role' => 'required',
+        ];
+
+        $messages = [
+            'fname.required' => 'Please enter a valid name!',
+            'fname.regex' => 'Please enter a valid username! Valid symbols: ".","-"',
+            'fname.max' => 'Maximum of 255 characters only!',
+            'mname.regex' => 'Please enter a valid username! Valid symbols: ".","-"',
+            'mname.max' => 'Maximum of 255 characters only!',
+            'lname.required' => 'Please enter a valid name!',
+            'lname.regex' => 'Please enter a valid username! Valid symbols: ".","-"',
+            'lname.max' => 'Maximum of 255 characters only!',
+            'username.required' => 'Please enter a valid name!',
+            'username.regex' => 'Please enter a valid username! Valid symbols: "_", ".","-"',
+            'username.unique' => 'Username is already registered! Try another one.',
+            'username.max' => 'Maximum of 255 characters only!',
+            'email.required' => 'Please enter the description!',
+            'email.email' => 'Please enter a valid e-mail address!',
+            'email.unique' => 'E-mail address is already registered! Try another one.',
+            'email.max' => 'Maximum of 255 characters only!',
+            'role' => 'Please select a role on the list!',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) return redirect('users/' . $id . '/edit')->withErrors($validator)->withInput();
+        else {
+            $user = User::findOrFail($id);
+
+            $user->fname = ucwords(trim($request->fname));
+            $user->mname = ucwords(trim($request->mname));
+            $user->lname = ucwords(trim($request->lname));
+            $user->username = trim($request->username);
+            $user->email = trim($request->email);
+            $user->role = $request->role;
+            $user->save();
+
+            Session::flash('success', 'This user was successfully saved.');
+
+            return redirect()->route('users.show', $user->id);
+        }
     }
 
     /**

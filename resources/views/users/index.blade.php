@@ -26,7 +26,6 @@
                     {!! Html::linkRoute('users.create', 'New User', [], ['class' => 'btn btn-primary btn-block']) !!}
                 </div>
             </div>
-            @if(count($users) > 0)
             <ul class="nav nav-tabs" role="tablist">
                 <li class="{{  Route::is('users.index') ? 'active' : '' }}" role="presentation">
                     <a href="{{ route('users.index') }}" role="tab" data-toggel="tab" aria-controls="users">All Users</a>
@@ -66,8 +65,8 @@
                                             </span>
                                         </td>
                                         <td>{{ $user->email }}</td>
-                                        <td>{{ date('M j, Y', strtotime($user->created_at)) }}</td>
-                                        <td>{{ date('M j, Y', strtotime($user->updated_at)) }}</td>
+                                        <td>{{ $carbon->parse($user->created_at)->toFormattedDateString() }}</td>
+                                        <td>{{ $carbon->parse($user->updated_at)->toFormattedDateString() }}</td>
                                         <td class="text-center">
                                             {!! Form::open([
                                                 'method' => 'DELETE',
@@ -89,7 +88,6 @@
                     </div>
                 </div>
             </div>
-            @endif
         </div>
     </div>
 @endsection
