@@ -218,7 +218,6 @@ class UserController extends Controller
         //if($user->user_id != Auth::user()->id) return redirect()->route('posts.show', $user->id);
 
         $name = $user->fname;
-        //$posts->delete();
         $user->delete();
 
         Session::flash('success', "<b>$name</b> was successfully deleted.");

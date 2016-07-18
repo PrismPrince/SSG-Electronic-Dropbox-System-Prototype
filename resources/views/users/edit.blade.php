@@ -103,8 +103,8 @@
                         </div>
                         <div class="panel-body">
                             <dl class="col-sm-12">
-                                <dt>Author</dt>
-                                <dd>{{ $user->ststus }}</dd>
+                                <dt>Status</dt>
+                                <dd>{{ ucfirst($user->status) }}</dd>
                                 <dt>Joined</dt>
                                 <dd>{{ $carbon->parse($user->created_at)->diffForHumans() }}</dd>
                                 <dt>Updated</dt>
