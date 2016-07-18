@@ -75,7 +75,6 @@ class PostController extends Controller
             'title.regex' => 'Some characters are not accepted!',
             'title.max' => 'Maximum of 255 characters only!',
             'desc.required' => 'Please enter the description!',
-            'desc.regex' => 'Some characters are not accepted!',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -102,7 +101,6 @@ class PostController extends Controller
      */
     public function show($id)
     {
-
         $carbon = new Carbon;
 
         $post = Post::findOrFail($id);
