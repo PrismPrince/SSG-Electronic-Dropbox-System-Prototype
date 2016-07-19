@@ -32,7 +32,6 @@
                         @endforeach
                         <div class="help-block with-errors">{{ $errors->has('option[]') ? $errors->first('option[]') : '' }}</div>
                     </div>
-
                 </div>
 
                 <div class="col-md-3">

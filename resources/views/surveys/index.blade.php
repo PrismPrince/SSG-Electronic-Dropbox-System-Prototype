@@ -20,21 +20,24 @@
                     @include('partials._alert')
                 </div>
                 <div class="col-sm-10">
-                    <h1 style="margin-top:0">{{ count($surveys) == 0 ? 'No Post' : 'Posts' }}</h1>
+                    <h1 style="margin-top:0">{{ count($surveys) == 0 ? 'No Survey' : 'Surveys' }}</h1>
                 </div>
                 <div class="col-sm-2">
-                    {!! Html::linkRoute('surveys.create', 'New Post', [], ['class' => 'btn btn-primary btn-block']) !!}
+                    {!! Html::linkRoute('surveys.create', 'New Survey', [], ['class' => 'btn btn-primary btn-block']) !!}
                 </div>
             </div>
             <ul class="nav nav-tabs" role="tablist">
                 <li class="{{  Route::is('surveys.index') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('surveys.index') }}" role="tab" data-toggel="tab" aria-controls="surveys">All Posts <span class="badge">{{ $count['all'] }}</span></a>
+                    <a href="{{ route('surveys.index') }}" role="tab" data-toggel="tab" aria-controls="surveys">All Surveys <span class="badge">{{ $count['all'] }}</span></a>
                 </li>
-                <li class="{{ Route::is('surveys.me') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('surveys.me') }}" role="tab" data-toggel="tab" aria-controls="myPosts">My Posts <span class="badge">{{ $count['me'] }}</span></a>
+                <li class="{{  Route::is('surveys.active') ? 'active' : '' }}" role="presentation">
+                    <a href="{{ route('surveys.active') }}" role="tab" data-toggel="tab" aria-controls="surveys">Active Surveys <span class="badge">{{ $count['active'] }}</span></a>
                 </li>
-                <li class="{{ Route::is('surveys.other') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('surveys.other') }}" role="tab" data-toggel="tab" aria-controls="otherPosts">Other Posts <span class="badge">{{ $count['other'] }}</span></a>
+                <li class="{{  Route::is('surveys.inactive') ? 'active' : '' }}" role="presentation">
+                    <a href="{{ route('surveys.inactive') }}" role="tab" data-toggel="tab" aria-controls="surveys">Inactive Surveys <span class="badge">{{ $count['inactive'] }}</span></a>
+                </li>
+                <li class="{{  Route::is('surveys.expired') ? 'active' : '' }}" role="presentation">
+                    <a href="{{ route('surveys.expired') }}" role="tab" data-toggel="tab" aria-controls="surveys">Expired Surveys <span class="badge">{{ $count['expired'] }}</span></a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -47,7 +50,7 @@
                                     <th class="text-center">Author</th>
                                     <th class="text-center">Description</th>
                                     <th class="text-center">Options</th>
-                                    <th class="text-center">Statistics</th>
+                                    <th class="text-center">Votes</th>
                                     <th class="text-center">Start</th>
                                     <th class="text-center">End</th>
                                     <th class="text-center">Status</th>
@@ -59,11 +62,11 @@
                             <tbody>
                                 @foreach($surveys as $survey)
                                     <tr>
-                                        <td>{{ substr($survey->title, 0, 32) }}{{ strlen($survey->title) > 32 ? '...' : '' }}</td>
-                                        <td>{{ $survey->user->fname . ' ' . ($survey->user->mname == '' ? '' : $survey->user->mname . ' ') . $survey->user->lname }}</td>
-                                        <td>{{ substr($survey->desc, 0, 67) }}{{ strlen($survey->desc) > 67 ? '...' : '' }}</td>
+                                        <td>{{ substr($survey->title, 0, 22) }}{{ strlen($survey->title) > 22 ? '...' : '' }}</td>
+                                        <td>{{ $survey->user->fname . ' ' . $survey->user->lname }}</td>
+                                        <td>{{ substr($survey->desc, 0, 47) }}{{ strlen($survey->desc) > 47 ? '...' : '' }}</td>
                                         <td>{{ count($survey->options) }}</td>
-                                        <td>{{  }}</td>
+                                        <td>{{ $votes[$survey->id] }}</td>
                                         <td>{{ $carbon->toFormattedDateString($survey->start) }}</td>
                                         <td>{{ $carbon->toFormattedDateString($survey->end) }}</td>
                                         <td>{{ ucfirst($survey->status) }}</td>

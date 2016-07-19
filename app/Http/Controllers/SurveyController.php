@@ -31,10 +31,78 @@ class SurveyController extends Controller
      */
     public function index()
     {
-        //$carbon = new Carbon;
-        //$surveys = Survey::orderBy('updated_at', 'desc')->paginate(15);
-        //$count = $this->countSurveys();
-        //return view('surveys.index')->withSurveys($surveys)->withCount($count)->withCarbon($carbon);
+        $carbon = new Carbon;
+
+        $totalVotes = 0;
+
+        $surveys = Survey::orderBy('updated_at', 'desc')->paginate(15);
+
+        foreach ($surveys as $survey) {
+            $options = Option::where('survey_id', $survey->id)->get();
+            foreach ($options as $option) $totalVotes += count($option->students);
+            $votes[$survey->id] = $totalVotes;
+        }
+
+        $count = $this->countSurveys();
+
+        return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count)->withCarbon($carbon);
+    }
+
+    public function active()
+    {
+        $carbon = new Carbon;
+
+        $totalVotes = 0;
+
+        $surveys = Survey::where('status', 'active')->orderBy('updated_at', 'desc')->paginate(15);
+
+        foreach ($surveys as $survey) {
+            $options = Option::where('survey_id', $survey->id)->get();
+            foreach ($options as $option) $totalVotes += count($option->students);
+            $votes[$survey->id] = $totalVotes;
+        }
+
+        $count = $this->countSurveys();
+
+        return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count)->withCarbon($carbon);
+    }
+
+    public function inactive()
+    {
+        $carbon = new Carbon;
+
+        $totalVotes = 0;
+
+        $surveys = Survey::where('status', 'inactive')->orderBy('updated_at', 'desc')->paginate(15);
+
+        foreach ($surveys as $survey) {
+            $options = Option::where('survey_id', $survey->id)->get();
+            foreach ($options as $option) $totalVotes += count($option->students);
+            $votes[$survey->id] = $totalVotes;
+        }
+
+        $count = $this->countSurveys();
+
+        return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count)->withCarbon($carbon);
+    }
+
+    public function expired()
+    {
+        $carbon = new Carbon;
+
+        $totalVotes = 0;
+
+        $surveys = Survey::where('status', 'expired')->orderBy('updated_at', 'desc')->paginate(15);
+
+        foreach ($surveys as $survey) {
+            $options = Option::where('survey_id', $survey->id)->get();
+            foreach ($options as $option) $totalVotes += count($option->students);
+            $votes[$survey->id] = $totalVotes;
+        }
+
+        $count = $this->countSurveys();
+
+        return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count)->withCarbon($carbon);
     }
 
     /**
@@ -44,25 +112,7 @@ class SurveyController extends Controller
      */
     public function create()
     {
-        $carbon = new Carbon;
-
-        $totalVotes = 0;
-
-        $survey = Survey::findOrFail($id);
-        $getOption = Option::where('survey_id', $id)->get();
-
-        foreach ($getOption as $option) {
-            $totalVotes += count($option->students);
-        }
-
-        foreach ($survey->options as $option) {
-            $voteCount = count($option->students);
-            $votesPercent[$option->id] = $voteCount;
-        }
-
-        $votes = $this->votesPercent($votesPercent, $totalVotes);
-
-        return view('surveys.show')->withSurvey($survey)->withVotes($votes)->withCarbon($carbon);
+        //
     }
 
     /**
@@ -89,18 +139,11 @@ class SurveyController extends Controller
         $totalVotes = 0;
 
         $survey = Survey::findOrFail($id);
-        $getOption = Option::where('survey_id', $id)->get();
-
-        foreach ($getOption as $option) {
-            $totalVotes += count($option->students);
+        $options = Option::where('survey_id', $id)->get();
+        foreach ($options as $option) $totalVotes += count($option->students);
+        foreach ($options as $option) {
+            $votes[$option->id] = (count($option->students) / $totalVotes) * 100;
         }
-
-        foreach ($survey->options as $option) {
-            $voteCount = count($option->students);
-            $votesPercent[$option->id] = $voteCount;
-        }
-
-        $votes = $this->votesPercent($votesPercent, $totalVotes);
 
         return view('surveys.show')->withSurvey($survey)->withVotes($votes)->withCarbon($carbon);
     }
@@ -140,17 +183,11 @@ class SurveyController extends Controller
     }
 
     private function countSurveys() {
-        //$count['all'] = Post::all()->count();
-        //$count['me'] = Post::where('user_id', Auth::user()->id)->get()->count();
-        //$count['other'] = Post::where('user_id','!=', Auth::user()->id)->get()->count();
+        $count['all'] = Survey::all()->count();
+        $count['active'] = Survey::where('status', 'active')->get()->count();
+        $count['inactive'] = Survey::where('status', 'inactive')->get()->count();
+        $count['expired'] = Survey::where('status', 'expired')->get()->count();
 
-        //return $count;
-    }
-
-    private function votesPercent($votes, $total) {
-        foreach ($votes as $id => $vote) {
-            $percent[$id] = ($vote / $total) * 100;
-        }
-        return $percent;
+        return $count;
     }
 }
