@@ -11,6 +11,6 @@ class Survey extends Model
     }
 
     public function options() {
-        return $this->hasOne(Option::class);
+        return $this->hasMany(Option::class);
     }
 }

@@ -1,3 +1,21 @@
+{{--
+
+NOT INCLUDED ON THE SYSTEM:
+FOR SECURITY PURPOSE
+
+For further development,
+this may be included
+depending on the need of the
+client.
+
+URL: https://..../register
+Method: POST
+Submit: https:/..../register
+
+--Dave Dane Pacilan
+
+--}}
+
 @extends('layouts.app')
 
 @section('content')

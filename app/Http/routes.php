@@ -43,6 +43,7 @@ Route::get('logout', 'Auth\AuthController@logout');
 // students
 Route::get('/', 'HomeController@index'); // done
 Route::resource('suggest', 'SuggestionController', ['only' => ['create', 'store']]); // done
+Route::resource('surveys', 'SurveyController');
 //Route::resource('surveys', 'SurveyController', ['only' => ['index', 'show']]);
 //Route::post('surveys/{id}/vote', 'OptionStudentController@store');
 
