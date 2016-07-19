@@ -88,9 +88,9 @@ class SurveysTableSeeder extends Seeder
 	        'user_id' => 1000000000,
 	        'title' => 'Some title that attracts the students:',
 	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla id nisi perspiciatis, magnam expedita cum porro aut molestias accusantium praesentium optio magni explicabo. Laboriosam impedit rerum est, voluptatibus explicabo optio. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis veritatis voluptas voluptates libero corporis quasi eligendi aliquid minus tempora, itaque! Consequuntur veniam, sequi, voluptatem deleniti at reiciendis quis ex expedita!',
-	        'start' => time(),
-	        'end' => time(),
-	        'status' => 'avtive',
+	        'start' => date('Y-m-d H:i:s', time()),
+	        'end' => date('Y-m-d H:i:s', time()),
+	        'status' => 'active',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -103,19 +103,19 @@ class OptionsTableSeeder extends Seeder
     {
     	DB::table('options')->insert([
 	        'survey_id' => 1000000000,
-	        'answer' => 'Option 1',
+	        'answer' => 'Orange',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
         DB::table('options')->insert([
 	        'survey_id' => 1000000000,
-	        'answer' => 'Option 2',
+	        'answer' => 'Banana',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
         DB::table('options')->insert([
 	        'survey_id' => 1000000000,
-	        'answer' => 'Option 3',
+	        'answer' => 'Apple',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);

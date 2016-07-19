@@ -44,7 +44,25 @@ class SurveyController extends Controller
      */
     public function create()
     {
-        //
+        $carbon = new Carbon;
+
+        $totalVotes = 0;
+
+        $survey = Survey::findOrFail($id);
+        $getOption = Option::where('survey_id', $id)->get();
+
+        foreach ($getOption as $option) {
+            $totalVotes += count($option->students);
+        }
+
+        foreach ($survey->options as $option) {
+            $voteCount = count($option->students);
+            $votesPercent[$option->id] = $voteCount;
+        }
+
+        $votes = $this->votesPercent($votesPercent, $totalVotes);
+
+        return view('surveys.show')->withSurvey($survey)->withVotes($votes)->withCarbon($carbon);
     }
 
     /**
@@ -68,23 +86,23 @@ class SurveyController extends Controller
     {
         $carbon = new Carbon;
 
+        $totalVotes = 0;
+
         $survey = Survey::findOrFail($id);
-
         $getOption = Option::where('survey_id', $id)->get();
-        $totalVotes =0; // init
-        foreach ($getOption as $option => $votes) {
-            $totalVotes += count($votes); // 5
+
+        foreach ($getOption as $option) {
+            $totalVotes += count($option->students);
         }
 
-        foreach ($survey->options as $option => $students) {
-            $voteCount = count($students);
-            $votesPercent[] = $voteCount;
+        foreach ($survey->options as $option) {
+            $voteCount = count($option->students);
+            $votesPercent[$option->id] = $voteCount;
         }
 
-        $votes = votesPercent($votesPercent[], $totalVotes);
+        $votes = $this->votesPercent($votesPercent, $totalVotes);
 
-        return view('surveys.show')->withSurvey($survey)->withTotalvote($totalVote)->withVotes($votes)->withCarbon($carbon);
-        //return view('surveys.show')->withSurveys($surveys)->withCount($count)->withCarbon($carbon);
+        return view('surveys.show')->withSurvey($survey)->withVotes($votes)->withCarbon($carbon);
     }
 
     /**
@@ -129,8 +147,10 @@ class SurveyController extends Controller
         //return $count;
     }
 
-    private function votesPercent($votes) {
-
-        return ;
+    private function votesPercent($votes, $total) {
+        foreach ($votes as $id => $vote) {
+            $percent[$id] = ($vote / $total) * 100;
+        }
+        return $percent;
     }
 }

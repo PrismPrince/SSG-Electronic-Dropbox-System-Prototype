@@ -108,6 +108,7 @@
                         {!! Form::button('Post', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
                         {!! Html::linkRoute('posts.index', 'Cancel', null, ['class' => 'btn btn-default']) !!}
                     </div>
+
                 {!! Form::close() !!}
 
             </div>

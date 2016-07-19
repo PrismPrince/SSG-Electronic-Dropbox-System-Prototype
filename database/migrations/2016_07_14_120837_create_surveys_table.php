@@ -17,8 +17,8 @@ class CreateSurveysTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('title');
             $table->text('desc');
-            $table->integer('start');
-            $table->integer('end');
+            $table->timestamp('start');
+            $table->timestamp('end');
             $table->string('status', 10)->default('inactive');
             $table->timestamps();
         });

@@ -24,13 +24,15 @@
                     <li>{!! Html::link('suggest/create', 'Suggest') !!}</li>
                 @elseif(Auth::user()->role == 'admin')
                     <li>{!! Html::link('admin', 'Home') !!}</li>
-                    <li>{!! Html::link('suggestions', 'Suggestions') !!}</li>
                     <li>{!! Html::link('posts', 'Posts') !!}</li>
+                    <li>{!! Html::link('surveys', 'Surveys') !!}</li>
+                    <li>{!! Html::link('suggestions', 'Suggestions') !!}</li>
                     <li>{!! Html::link('users', 'Users') !!}</li>
                 @elseif(Auth::user()->role == 'moderator')
                     <li>{!! Html::link('moderator', 'Home') !!}</li>
-                    <li>{!! Html::link('suggestions', 'Suggestions') !!}</li>
                     <li>{!! Html::link('posts', 'Posts') !!}</li>
+                    <li>{!! Html::link('surveys', 'Surveys') !!}</li>
+                    <li>{!! Html::link('suggestions', 'Suggestions') !!}</li>
                 @endif
 
             </ul>

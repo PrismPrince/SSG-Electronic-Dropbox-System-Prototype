@@ -44,6 +44,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Title</th>
+                                    <th class="text-center">Author</th>
                                     <th class="text-center">Description</th>
                                     <th class="text-center">Created at</th>
                                     <th class="text-center">Updated at</th>
@@ -54,6 +55,7 @@
                                 @foreach($posts as $post)
                                     <tr>
                                         <td>{{ substr($post->title, 0, 32) }}{{ strlen($post->title) > 32 ? '...' : '' }}</td>
+                                        <td>{{ $post->user->fname . ' ' . ($post->user->mname == '' ? '' : $post->user->mname . ' ') . $post->user->lname }}</td>
                                         <td>{{ substr($post->desc, 0, 67) }}{{ strlen($post->desc) > 67 ? '...' : '' }}</td>
                                         <td>{{ $carbon->toFormattedDateString($post->created_at) }}</td>
                                         <td>{{ $carbon->toFormattedDateString($post->updated_at) }}</td>
