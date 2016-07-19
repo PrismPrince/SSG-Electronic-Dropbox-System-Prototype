@@ -28,13 +28,13 @@
             </div>
             <ul class="nav nav-tabs" role="tablist">
                 <li class="{{  Route::is('users.index') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('users.index') }}" role="tab" data-toggel="tab" aria-controls="users">All Users</a>
+                    <a href="{{ route('users.index') }}" role="tab" data-toggel="tab" aria-controls="users">All Users <span class="badge">{{ $count['all'] }}</span></a>
                 </li>
                 <li class="{{ Route::is('users.admin') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('users.admin') }}" role="tab" data-toggel="tab" aria-controls="otherPosts">Admin Users</a>
+                    <a href="{{ route('users.admin') }}" role="tab" data-toggel="tab" aria-controls="otherPosts">Admin Users <span class="badge">{{ $count['admin'] }}</span></a>
                 </li>
                 <li class="{{ Route::is('users.moderator') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('users.moderator') }}" role="tab" data-toggel="tab" aria-controls="myPosts">Moderator Users</a>
+                    <a href="{{ route('users.moderator') }}" role="tab" data-toggel="tab" aria-controls="myPosts">Moderator Users <span class="badge">{{ $count['moderator'] }}</span></a>
                 </li>
             </ul>
             <div class="tab-content">

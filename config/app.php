@@ -147,6 +147,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        
+        Collective\Html\HtmlServiceProvider::class,
+        //Carbon\Carbon::class,
+        //Carbon\CarbonInterval::class,
 
         /*
          * Application Service Providers...
@@ -155,7 +159,6 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -204,6 +207,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        //'Carbon' => Carbon\Carbon::class,
+        //'CarbonInterval' => Carbon\CarbonInterval::class,
 
     ],
 

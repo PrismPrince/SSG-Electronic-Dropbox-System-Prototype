@@ -25,7 +25,7 @@
             </div>
             <ul class="nav nav-tabs" role="tablist">
                 <li class="{{  Route::is('suggestions.index') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('suggestions.index') }}" role="tab" data-toggel="tab" aria-controls="suggestions">All Suggestions</a>
+                    <a href="{{ route('suggestions.index') }}" role="tab" data-toggel="tab" aria-controls="suggestions">All Suggestions <span class="badge">{{ count($suggestions) }}</span></a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -46,7 +46,7 @@
                             <tbody>
                                 @foreach($suggestions as $suggestion)
                                     <tr>
-                                        <td>{{ $suggestion->student->id }}</td>
+                                        <th class="text-center">{{ $suggestion->student->id }}</th>
                                         <td>{{ $suggestion->student->fname . ' ' . ($suggestion->student->mname == '' ? '' : $suggestion->student->mname . ' ') . $suggestion->student->lname }}</td>
                                         <td>{{ substr($suggestion->addressed_to, 0, 32) }}{{ strlen($suggestion->addressed_to) > 32 ? '...' : '' }}</td>
                                         <td>{{ substr($suggestion->title, 0, 32) }}{{ strlen($suggestion->title) > 32 ? '...' : '' }}</td>

@@ -28,13 +28,13 @@
             </div>
             <ul class="nav nav-tabs" role="tablist">
                 <li class="{{  Route::is('posts.index') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('posts.index') }}" role="tab" data-toggel="tab" aria-controls="posts">All Posts</a>
-                </li>
-                <li class="{{ Route::is('posts.other') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('posts.other') }}" role="tab" data-toggel="tab" aria-controls="otherPosts">Other Posts</a>
+                    <a href="{{ route('posts.index') }}" role="tab" data-toggel="tab" aria-controls="posts">All Posts <span class="badge">{{ $count['all'] }}</span></a>
                 </li>
                 <li class="{{ Route::is('posts.me') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('posts.me') }}" role="tab" data-toggel="tab" aria-controls="myPosts">My Posts</a>
+                    <a href="{{ route('posts.me') }}" role="tab" data-toggel="tab" aria-controls="myPosts">My Posts <span class="badge">{{ $count['me'] }}</span></a>
+                </li>
+                <li class="{{ Route::is('posts.other') ? 'active' : '' }}" role="presentation">
+                    <a href="{{ route('posts.other') }}" role="tab" data-toggel="tab" aria-controls="otherPosts">Other Posts <span class="badge">{{ $count['other'] }}</span></a>
                 </li>
             </ul>
             <div class="tab-content">

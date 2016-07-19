@@ -30,21 +30,24 @@ class UserController extends Controller
     {
         $carbon = new Carbon;
         $users = User::orderBy('updated_at', 'desc')->paginate(10);
-        return view('users.index')->withUsers($users)->withCarbon($carbon);
+        $count = $this->countUsers();
+        return view('users.index')->withUsers($users)->withCount($count)->withCarbon($carbon);
     }
 
     public function moderator()
     {
         $carbon = new Carbon;
         $users = User::where('role', 'moderator')->orderBy('updated_at', 'desc')->paginate(10);
-        return view('users.index')->withUsers($users)->withCarbon($carbon);
+        $count = $this->countUsers();
+        return view('users.index')->withUsers($users)->withCount($count)->withCarbon($carbon);
     }
 
     public function admin()
     {
         $carbon = new Carbon;
         $users = User::where('role', 'admin')->orderBy('updated_at', 'desc')->paginate(10);
-        return view('users.index')->withUsers($users)->withCarbon($carbon);
+        $count = $this->countUsers();
+        return view('users.index')->withUsers($users)->withCount($count)->withCarbon($carbon);
     }
 
     /**
@@ -223,5 +226,13 @@ class UserController extends Controller
         Session::flash('success', "<b>$name</b> was successfully deleted.");
 
         return redirect()->route('users.index');
+    }
+
+    private function countUsers() {
+        $count['all'] = User::all()->count();
+        $count['admin'] = User::where('role', 'admin')->get()->count();
+        $count['moderator'] = User::where('role', 'moderator')->get()->count();
+
+        return $count;
     }
 }

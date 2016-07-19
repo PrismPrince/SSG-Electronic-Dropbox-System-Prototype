@@ -30,21 +30,24 @@ class PostController extends Controller
     {
         $carbon = new Carbon;
         $posts = Post::orderBy('updated_at', 'desc')->paginate(10);
-        return view('posts.index')->withPosts($posts)->withCarbon($carbon);
+        $count = $this->countPosts();
+        return view('posts.index')->withPosts($posts)->withCount($count)->withCarbon($carbon);
     }
 
     public function me()
     {
         $carbon = new Carbon;
         $posts = Post::where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(10);
-        return view('posts.index')->withPosts($posts)->withCarbon($carbon);
+        $count = $this->countPosts();
+        return view('posts.index')->withPosts($posts)->withCount($count)->withCarbon($carbon);
     }
 
     public function other()
     {
         $carbon = new Carbon;
         $posts = Post::where('user_id','!=', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(10);
-        return view('posts.index')->withPosts($posts)->withCarbon($carbon);
+        $count = $this->countPosts();
+        return view('posts.index')->withPosts($posts)->withCount($count)->withCarbon($carbon);
     }
 
     /**
@@ -185,5 +188,13 @@ class PostController extends Controller
     {
         $posts = Post::where('user_id', Auth::user()->id)->get();
         return view('posts.index')->withPosts($posts);
+    }
+
+    private function countPosts() {
+        $count['all'] = Post::all()->count();
+        $count['me'] = Post::where('user_id', Auth::user()->id)->get()->count();
+        $count['other'] = Post::where('user_id','!=', Auth::user()->id)->get()->count();
+
+        return $count;
     }
 }
