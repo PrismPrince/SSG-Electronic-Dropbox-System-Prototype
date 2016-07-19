@@ -7,34 +7,40 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                        {{ csrf_field() }}
+                    {!! Form::open([
+                        'class' => 'form-horizontal',
+                        'data-toggle' => 'validator',
+                        'role' => 'form',
+                        'url' => 'login',
+                    ]) !!}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
+                            {!! Form::label('email', 'E-mail Address', ['class' => 'control-label col-md-4']) !!}
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                                {!! Form::email('email', old('email'), [
+                                    'class' => 'form-control',
+                                    'required',
+                                    'maxlength' => 255,
+                                    'minlength' => 8,
+                                    'data-error' => 'Please enter a valid e-mail address!',
+                                    'placeholder' => 'Enter your e-mail address...',
+                                ]) !!}
+                                <div class="help-block with-errors">{{ $errors->has('email') ? $errors->first('email') : '' }}</div>
                             </div>
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+                            {!! Form::label('password', 'Password', ['class' => 'control-label col-md-4']) !!}
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+                                {!! Form::password('password', [
+                                    'class' => 'form-control',
+                                    'required',
+                                    'minlength' => 8,
+                                    'data-error' => 'Minimum of 8 characters!',
+                                    'placeholder' => 'Enter a password...',
+                                ]) !!}
+                                <div class="help-block with-errors">{{ $errors->has('password') ? $errors->first('password') : '' }}</div>
                             </div>
                         </div>
 
@@ -42,7 +48,7 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember"> Remember Me
+                                        {!! Form::checkbox('remember', null) !!} Remember Me
                                     </label>
                                 </div>
                             </div>
@@ -50,11 +56,8 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i> Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
+                                {!! Form::button('Login', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
+                                {!! Html::link('password/reset', 'Forgot Your Password?', ['class' => 'btn btn-link']) !!}
                             </div>
                         </div>
                     </form>

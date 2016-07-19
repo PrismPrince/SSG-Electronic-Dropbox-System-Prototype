@@ -20,7 +20,7 @@
                     <div class="panel-body">
                         <dl class="col-sm-12">
                             <dt>Student</dt>
-                            <dd>{{ $suggestion->student->fname . ' ' . $suggestion->student->lname }}</dd>
+                            <dd>{{ $suggestion->student->fname . ' ' . ($suggestion->student->mname == '' ? '' : $suggestion->student->mname . ' ') . $suggestion->student->lname }}</dd>
                             <dt>Suggested</dt>
                             <dd>{{ $carbon->parse($suggestion->created_at)->diffForHumans() }}</dd>
                         </dl>

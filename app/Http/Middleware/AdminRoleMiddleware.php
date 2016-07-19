@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Session;
 
 class AdminRoleMiddleware
 {
@@ -19,7 +20,7 @@ class AdminRoleMiddleware
             return $next($request);
         }
 
-        return response('blank', 404);
-        //return $next($request);
+        Session::flash('error', 'Not allowed');
+        return redirect('/');
     }
 }

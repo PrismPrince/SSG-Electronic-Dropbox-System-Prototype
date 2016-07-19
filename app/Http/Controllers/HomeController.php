@@ -14,6 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+        //$this->middleware('guest', ['only' => 'index']);
         $this->middleware('auth', ['only' => ['admin', 'moderator']]);
         $this->middleware('admin', ['only' => ['admin']]);
         $this->middleware('moderator', ['only' => ['moderator']]);

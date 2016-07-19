@@ -17,6 +17,7 @@ class SuggestionController extends Controller
     */
     public function __construct()
     {
+        $this->middleware('guest', ['only' => ['create', 'store']]);
         $this->middleware('auth', ['only' => ['index', 'show', 'destroy']]);
     }
 
@@ -28,7 +29,7 @@ class SuggestionController extends Controller
     public function index()
     {
         $carbon = new Carbon;
-        $suggestions = Suggestion::orderBy('updated_at', 'desc')->paginate(10);
+        $suggestions = Suggestion::orderBy('updated_at', 'desc')->paginate(15);
         return view('suggestions.index')->withSuggestions($suggestions)->withCarbon($carbon);
     }
 

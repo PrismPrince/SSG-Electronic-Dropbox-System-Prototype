@@ -29,7 +29,7 @@ class UserController extends Controller
     public function index()
     {
         $carbon = new Carbon;
-        $users = User::orderBy('updated_at', 'desc')->paginate(10);
+        $users = User::orderBy('updated_at', 'desc')->paginate(15);
         $count = $this->countUsers();
         return view('users.index')->withUsers($users)->withCount($count)->withCarbon($carbon);
     }
@@ -37,7 +37,7 @@ class UserController extends Controller
     public function moderator()
     {
         $carbon = new Carbon;
-        $users = User::where('role', 'moderator')->orderBy('updated_at', 'desc')->paginate(10);
+        $users = User::where('role', 'moderator')->orderBy('updated_at', 'desc')->paginate(15);
         $count = $this->countUsers();
         return view('users.index')->withUsers($users)->withCount($count)->withCarbon($carbon);
     }
@@ -45,7 +45,7 @@ class UserController extends Controller
     public function admin()
     {
         $carbon = new Carbon;
-        $users = User::where('role', 'admin')->orderBy('updated_at', 'desc')->paginate(10);
+        $users = User::where('role', 'admin')->orderBy('updated_at', 'desc')->paginate(15);
         $count = $this->countUsers();
         return view('users.index')->withUsers($users)->withCount($count)->withCarbon($carbon);
     }

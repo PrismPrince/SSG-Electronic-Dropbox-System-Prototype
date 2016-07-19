@@ -29,7 +29,7 @@ class PostController extends Controller
     public function index()
     {
         $carbon = new Carbon;
-        $posts = Post::orderBy('updated_at', 'desc')->paginate(10);
+        $posts = Post::orderBy('updated_at', 'desc')->paginate(15);
         $count = $this->countPosts();
         return view('posts.index')->withPosts($posts)->withCount($count)->withCarbon($carbon);
     }
@@ -37,7 +37,7 @@ class PostController extends Controller
     public function me()
     {
         $carbon = new Carbon;
-        $posts = Post::where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(10);
+        $posts = Post::where('user_id', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(15);
         $count = $this->countPosts();
         return view('posts.index')->withPosts($posts)->withCount($count)->withCarbon($carbon);
     }
@@ -45,7 +45,7 @@ class PostController extends Controller
     public function other()
     {
         $carbon = new Carbon;
-        $posts = Post::where('user_id','!=', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(10);
+        $posts = Post::where('user_id','!=', Auth::user()->id)->orderBy('updated_at', 'desc')->paginate(15);
         $count = $this->countPosts();
         return view('posts.index')->withPosts($posts)->withCount($count)->withCarbon($carbon);
     }

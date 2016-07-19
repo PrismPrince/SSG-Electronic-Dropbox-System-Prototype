@@ -67,7 +67,6 @@
                         'class' => 'form-control',
                         'required',
                         'maxlength' => 255,
-                        'minlength' => 8,
                         'data-error' => 'Please enter a valid e-mail address!',
                         'placeholder' => 'Enter your e-mail address...',
                     ]) !!}
