@@ -130,7 +130,24 @@ class SurveyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $survey = new Survey;
+        $survey->user_id = Auth::user()->id;
+        $survey->title = trim($request->title);
+        $survey->desc = trim($request->desc);
+        $survey->start = trim($request->start);
+        $survey->end = trim($request->end);
+        $survey->status = trim($request->status);
+        $survey->type = trim($request->type);
+        $survey->save();
+
+        foreach ($request->answers as $answer) {
+            $option = new Option;
+            $option->survey_id = $survey->id;
+            $option->answer = $answer;
+            $option->save();
+        }
+
+        return;
     }
 
     /**
