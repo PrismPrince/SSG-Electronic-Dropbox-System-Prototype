@@ -79,7 +79,7 @@
                                                 'class' => 'form-horizontal'
                                             ]) !!}
                                             <a href="{{ url('surveys/' . $survey->id) }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                                            @if($survey->user_id == Auth::user()->id)
+                                            @if($survey->user->id == Auth::user()->id)
                                             <a href="{{ url('surveys/' . $survey->id . '/edit') }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                                                 {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs']) !!}
                                             @endif

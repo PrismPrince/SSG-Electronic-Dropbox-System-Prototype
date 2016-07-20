@@ -33,11 +33,13 @@ class SurveyController extends Controller
     {
         $carbon = new Carbon;
 
-        $totalVotes = 0;
 
         $surveys = Survey::orderBy('updated_at', 'desc')->paginate(15);
 
+        $votes = [];
+
         foreach ($surveys as $survey) {
+            $totalVotes = 0;
             $options = Option::where('survey_id', $survey->id)->get();
             foreach ($options as $option) $totalVotes += count($option->students);
             $votes[$survey->id] = $totalVotes;
@@ -52,11 +54,12 @@ class SurveyController extends Controller
     {
         $carbon = new Carbon;
 
-        $totalVotes = 0;
-
         $surveys = Survey::where('status', 'active')->orderBy('updated_at', 'desc')->paginate(15);
 
+        $votes = [];
+
         foreach ($surveys as $survey) {
+            $totalVotes = 0;
             $options = Option::where('survey_id', $survey->id)->get();
             foreach ($options as $option) $totalVotes += count($option->students);
             $votes[$survey->id] = $totalVotes;
@@ -71,11 +74,13 @@ class SurveyController extends Controller
     {
         $carbon = new Carbon;
 
-        $totalVotes = 0;
 
         $surveys = Survey::where('status', 'inactive')->orderBy('updated_at', 'desc')->paginate(15);
 
+        $votes = [];
+
         foreach ($surveys as $survey) {
+            $totalVotes = 0;
             $options = Option::where('survey_id', $survey->id)->get();
             foreach ($options as $option) $totalVotes += count($option->students);
             $votes[$survey->id] = $totalVotes;
@@ -90,11 +95,13 @@ class SurveyController extends Controller
     {
         $carbon = new Carbon;
 
-        $totalVotes = 0;
 
         $surveys = Survey::where('status', 'expired')->orderBy('updated_at', 'desc')->paginate(15);
 
+        $votes = [];
+
         foreach ($surveys as $survey) {
+            $totalVotes = 0;
             $options = Option::where('survey_id', $survey->id)->get();
             foreach ($options as $option) $totalVotes += count($option->students);
             $votes[$survey->id] = $totalVotes;
