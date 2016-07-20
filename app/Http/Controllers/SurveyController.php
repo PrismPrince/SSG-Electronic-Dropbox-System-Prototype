@@ -147,7 +147,9 @@ class SurveyController extends Controller
             $option->save();
         }
 
-        return;
+        Session::flash('success', 'Your survey was successfully created.');
+
+        return redirect()->route('surveys.show', $survey->id);
     }
 
     /**
