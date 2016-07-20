@@ -5,9 +5,11 @@
 @section('content')
     <div class="container">
         <div class="row">
-        @include('partials._alert')
+            <div class="col-sm-10 col-sm-offset-1">
+                @include('partials._alert')
+            </div>
             {!! Form::model($user, ['route' => ['users.update', $user->id], 'method' => 'PUT', 'class' => 'form-horizontal', 'role' => 'form', 'data-toggle' => 'validator']) !!}
-                <div class="col-sm-7 col-md-offset-1">
+                <div class="col-sm-7 col-sm-offset-1">
 
                     <div class="form-group has-feedback col-md-12{{ $errors->has('fname') ? ' has-error has-danger' : '' }}">
                         {!! Form::label('fname', 'First Name', ['class' => 'control-label col-sm-3']) !!}
@@ -96,24 +98,26 @@
                     </div>
 
                 </div>
-                <div class="col-md-3">
+                <div class="col-sm-3">
                     <div class="panel panel-success">
                         <div class="panel-heading">
                             <h3 class="panel-title">Details</h3>
                         </div>
                         <div class="panel-body">
-                            <dl class="col-sm-12">
-                                <dt>Status</dt>
-                                <dd>{{ ucfirst($user->status) }}</dd>
-                                <dt>Joined</dt>
-                                <dd>{{ $carbon->parse($user->created_at)->diffForHumans() }}</dd>
-                                <dt>Updated</dt>
-                                <dd>{{ $carbon->parse($user->updated_at)->diffForHumans() }}</dd>
-                            </dl>
-                            <div class="col-md-6">
+                            <div class="row">
+                                <dl class="col-sm-12">
+                                    <dt>Status</dt>
+                                    <dd>{{ ucfirst($user->status) }}</dd>
+                                    <dt>Joined</dt>
+                                    <dd>{{ $carbon->parse($user->created_at)->diffForHumans() }}</dd>
+                                    <dt>Updated</dt>
+                                    <dd>{{ $carbon->parse($user->updated_at)->diffForHumans() }}</dd>
+                                </dl>
+                            </div>
+                            <div class="form-group col-lg-6">
                                 {!! Html::linkRoute('users.show', 'Cancel', [$user->id], ['class' => 'btn btn-default btn-block']) !!}
                             </div>
-                            <div class="col-md-6">
+                            <div class="form-group col-lg-6">
                                 {!! Form::button('Update', ['type' => 'submit', 'class' => 'btn btn-success btn-block']) !!}
                             </div>
                         </div>

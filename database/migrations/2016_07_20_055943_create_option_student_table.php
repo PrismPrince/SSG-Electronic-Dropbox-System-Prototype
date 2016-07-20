@@ -14,8 +14,8 @@ class CreateOptionStudentTable extends Migration
     {
         Schema::create('option_student', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('student_id')->unsigned();
             $table->integer('option_id')->unsigned();
+            $table->integer('student_id')->unsigned();
             $table->timestamps();
         });
     }

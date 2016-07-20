@@ -8,29 +8,31 @@
             <div class="col-md-10 col-md-offset-1">
                 @include('partials._alert')
             </div>
-            <div class="col-sm-7 col-md-offset-1">
+            <div class="col-sm-7 col-sm-offset-1">
                 <h1>{{ $post->title }}</h1>
                 <p class="text-justify">{!! str_replace("\r", "<br>", htmlentities(preg_replace('/(\r\n\r\n\r\n)+|(\r\r\r)+|(\n\n\n)+/', "\r\r", $post->desc))) !!}</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-sm-3">
                 <div class="panel panel-success">
                     <div class="panel-heading">
                         <h3 class="panel-title">Details</h3>
                     </div>
                     <div class="panel-body">
-                        <dl class="col-sm-12">
-                            <dt>Author</dt>
-                            <dd>{{ $post->user->fname . ' ' . $post->user->lname }}</dd>
-                            <dt>Posted</dt>
-                            <dd>{{ $carbon->parse($post->created_at)->diffForHumans() }}</dd>
-                            <dt>Updated</dt>
-                            <dd>{{ $carbon->parse($post->updated_at)->diffForHumans() }}</dd>
-                        </dl>
+                        <div class="row">
+                            <dl class="col-sm-12">
+                                <dt>Author</dt>
+                                <dd>{{ $post->user->fname . ' ' . $post->user->lname }}</dd>
+                                <dt>Posted</dt>
+                                <dd>{{ $carbon->parse($post->created_at)->diffForHumans() }}</dd>
+                                <dt>Updated</dt>
+                                <dd>{{ $carbon->parse($post->updated_at)->diffForHumans() }}</dd>
+                            </dl>
+                        </div>
                         @if($post->user->id == Auth::user()->id)
-                            <div class="col-md-6">
+                            <div class="form-group col-lg-6">
                                 {!! Html::linkRoute('posts.edit', 'Edit Post', [$post->id], ['class' => 'btn btn-info btn-block']) !!}
                             </div>
-                            <div class="col-md-6">
+                            <div class=" form-group col-lg-6">
                                 {!! Form::open([
                                     'method' => 'DELETE',
                                     'route' => ['posts.destroy', $post->id],

@@ -19,7 +19,8 @@ class CreateSurveysTable extends Migration
             $table->text('desc');
             $table->timestamp('start');
             $table->timestamp('end');
-            $table->string('status', 10)->default('inactive');
+            $table->string('status')->default('inactive');
+            $table->string('type')->default('radio');
             $table->timestamps();
         });
     }

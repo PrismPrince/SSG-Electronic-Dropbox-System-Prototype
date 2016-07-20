@@ -119,7 +119,7 @@ class SurveyController extends Controller
      */
     public function create()
     {
-        //
+        view('surveys.create');
     }
 
     /**
@@ -149,7 +149,10 @@ class SurveyController extends Controller
         $options = Option::where('survey_id', $id)->get();
         foreach ($options as $option) $totalVotes += count($option->students);
         foreach ($options as $option) {
-            $votes[$option->id] = (count($option->students) / $totalVotes) * 100;
+            if($totalVotes == 0) $votes[$option->id] = 0;
+            else {
+                $votes[$option->id] = (count($option->students) / $totalVotes) * 100;
+            }
         }
 
         return view('surveys.show')->withSurvey($survey)->withVotes($votes)->withCarbon($carbon);

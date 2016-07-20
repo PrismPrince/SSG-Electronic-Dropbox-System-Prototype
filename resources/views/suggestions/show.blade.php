@@ -8,11 +8,11 @@
             <div class="col-md-10 col-md-offset-1">
                 @include('partials._alert')
             </div>
-            <div class="col-sm-7 col-md-offset-1">
+            <div class="col-sm-7 col-sm-offset-1">
                 <h1>{{ $suggestion->title }}</h1>
                 <p class="text-justify">{!! str_replace("\r", "<br>", htmlentities(preg_replace('/(\r\n\r\n\r\n)+|(\r\r\r)+|(\n\n\n)+/', "\r\r", $suggestion->message))) !!}</p>
             </div>
-            <div class="col-md-3">
+            <div class="col-sm-3">
                 <div class="panel panel-success">
                     <div class="panel-heading">
                         <h3 class="panel-title">Details</h3>
