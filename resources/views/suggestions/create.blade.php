@@ -41,18 +41,6 @@
                         <div class="help-block with-errors">{{ $errors->has('fname') ? $errors->first('fname') : '' }}</div>
                     </div>
 
-                    <div class="form-group has-feedback col-md-12{{ $errors->has('mname') ? ' has-error has-danger' : '' }}">
-                        {!! Form::label('mname', 'Middle Name', ['class' => 'control-label']) !!}
-                        {!! Form::text('mname', old('mname'), [
-                            'class' => 'form-control',
-                            'maxlength' => 255,
-                            'pattern' => '^[\s\-\.A-zÑñ]{1,255}$',
-                            'data-error' => 'Please enter a valid name!',
-                            'placeholder' => 'Enter your middle name...',
-                        ]) !!}
-                        <div class="help-block with-errors">{{ $errors->has('mname') ? $errors->first('mname') : '' }}</div>
-                    </div>
-
                     <div class="form-group has-feedback col-md-12{{ $errors->has('lname') ? ' has-error has-danger' : '' }}">
                         {!! Form::label('lname', 'Last Name', ['class' => 'control-label']) !!}
                         {!! Form::text('lname', old('lname'), [

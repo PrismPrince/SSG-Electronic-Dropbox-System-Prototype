@@ -54,7 +54,6 @@ class SuggestionController extends Controller
         $rules = [
             'student_id' => 'required|digits:7|exists:students,id',
             'fname' => 'required|exists:students,fname,id,' . $request->student_id,
-            'mname' => 'exists:students,mname,id,' . $request->student_id,
             'lname' => 'required|exists:students,lname,id,' . $request->student_id,
             'title' => 'required|regex:/[\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}/|max:255',
             'addressed_to' => 'required|regex:/[\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}/|max:255',
@@ -67,7 +66,6 @@ class SuggestionController extends Controller
             'student_id.exists' => 'ID number not found!',
             'fname.required' => 'Please enter a valid name!',
             'fname.exists' => 'Your first name was not found!',
-            'mname.exists' => 'Your middle name was not found!',
             'lname.required' => 'Please enter a valid name!',
             'lname.exists' => 'Your last name was not found!',
             'title.required' => 'Please enter the title!',
