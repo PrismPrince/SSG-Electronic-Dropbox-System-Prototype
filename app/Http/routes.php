@@ -21,8 +21,6 @@ Route::get('admin', 'HomeController@admin'); // done
 Route::get('users/moderator', ['as' => 'users.moderator','uses' => 'UserController@moderator']); // done
 Route::get('users/admin', ['as' => 'users.admin','uses' => 'UserController@admin']); // done
 Route::resource('users', 'UserController'); // done
-//Route::resource('admin/surveys', 'SurveyController');
-//Route::resource('admin/suggestions', 'SuggestionController');
 //Route::get('admin/survey/{id}/result', 'ResultController@getResult');
 
 // moderator
@@ -43,13 +41,11 @@ Route::get('logout', 'Auth\AuthController@logout');
 // students
 Route::get('/', 'HomeController@index'); // done
 Route::resource('suggest', 'SuggestionController', ['only' => ['create', 'store']]); // done
-Route::post('vote/{id}', 'VoteController@vote');
+Route::post('vote/{id}', 'SurveyController@vote'); // done
 Route::get('surveys/active', ['as' => 'surveys.active', 'uses' => 'SurveyController@active']);
 Route::get('surveys/inactive', ['as' => 'surveys.inactive', 'uses' => 'SurveyController@inactive']);
 Route::get('surveys/expired', ['as' => 'surveys.expired', 'uses' => 'SurveyController@expired']);
 Route::resource('surveys', 'SurveyController');
-//Route::resource('surveys', 'SurveyController', ['only' => ['index', 'show']]);
-//Route::post('surveys/{id}/vote', 'OptionStudentController@store');
 
 // register (admin)		may not be importantbecause of the users controller
 // Route::get('admin/register', 'Auth\AuthController@showRegistrationForm');
