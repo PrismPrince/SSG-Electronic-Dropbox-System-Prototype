@@ -32,7 +32,7 @@
                             <div class="col-md-12 clearfix form-group">
                                 <div class="col-sm-3">
                                     <label class="btn btn-info btn-block" for="option">
-                                    <input name="options[]" type="{{ $survey->type }}" value="{{ $option->id }}" data-error="Select an atleast one." style="position:absolute;clip:rect(0,0,0,0);pointer-events:none">{{ $option->answer }}</label>
+                                    <input name="options[]" type="{{ $survey->type }}" value="{{ $option->id }}" data-error="Choose an option!." style="position:absolute;clip:rect(0,0,0,0);pointer-events:none" {{-- ($survey->options->first() == $option) && $survey->type != 'checkbox' ? 'required' : '' --}}>{{ $option->answer }}</label>
                                 </div>
                                 <div class="row col-sm-9">
                                     <div class="progress">

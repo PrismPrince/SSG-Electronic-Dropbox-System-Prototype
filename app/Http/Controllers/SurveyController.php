@@ -119,7 +119,7 @@ class SurveyController extends Controller
      */
     public function create()
     {
-        view('surveys.create');
+        return view('surveys.create');
     }
 
     /**
