@@ -17,7 +17,7 @@
                     <h1>{{ $survey->title }}</h1>
                     <p class="text-justify">{{ $survey->desc }}</p>
                     
-                    <h3>Select One</h3>
+                    <h3>{{ ($survey->type == 'checkbox') ? 'Select one or more' : 'Select one only' }}</h3>
 
                     <div class="has-feedback{{ $errors->has('options[]') ? ' has-error has-danger' : '' }}">
                         <div class="col-md-12">
@@ -32,7 +32,7 @@
                             <div class="col-md-12 clearfix form-group">
                                 <div class="col-sm-3">
                                     <label class="btn btn-info btn-block" for="option">
-                                    <input name="options[]" type="{{ $survey->type }}" value="{{ $option->id }}" data-error="Choose an option!." style="position:absolute;clip:rect(0,0,0,0);pointer-events:none" {{-- ($survey->options->first() == $option) && $survey->type != 'checkbox' ? 'required' : '' --}}>{{ $option->answer }}</label>
+                                    <input name="options[]" type="{{ $survey->type }}" value="{{ $option->id }}" data-error="Choose an option!." style="position:absolute;clip:rect(0,0,0,0);pointer-events:none">{{ $option->answer }}</label>
                                 </div>
                                 <div class="row col-sm-9">
                                     <div class="progress">
