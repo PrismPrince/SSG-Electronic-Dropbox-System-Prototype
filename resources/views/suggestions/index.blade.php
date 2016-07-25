@@ -48,9 +48,9 @@
                                     <tr>
                                         <th class="text-center">{{ $suggestion->student->id }}</th>
                                         <td>{{ $suggestion->student->fname . ' ' . $suggestion->student->lname }}</td>
-                                        <td>{{ substr($suggestion->addressed_to, 0, 32) }}{{ strlen($suggestion->addressed_to) > 32 ? '...' : '' }}</td>
-                                        <td>{{ substr($suggestion->title, 0, 32) }}{{ strlen($suggestion->title) > 32 ? '...' : '' }}</td>
-                                        <td>{{ substr($suggestion->message, 0, 67) }}{{ strlen($suggestion->message) > 67 ? '...' : '' }}</td>
+                                        <td>{{ str_limit($suggestion->addressed_to, 32) }}</td>
+                                        <td>{{ str_limit($suggestion->title, 32) }}</td>
+                                        <td>{{ str_limit($suggestion->message, 67) }}</td>
                                         <td>{{ $carbon->toFormattedDateString($suggestion->created_at) }}</td>
                                         <td class="text-center">
                                             {!! Form::open([

@@ -54,9 +54,9 @@
                             <tbody>
                                 @foreach($posts as $post)
                                     <tr>
-                                        <td>{{ substr($post->title, 0, 32) }}{{ strlen($post->title) > 32 ? '...' : '' }}</td>
+                                        <td>{{ str_limit($post->title, 32) }}</td>
                                         <td>{{ $post->user->fname . ' ' . ($post->user->mname == '' ? '' : $post->user->mname . ' ') . $post->user->lname }}</td>
-                                        <td>{{ substr($post->desc, 0, 67) }}{{ strlen($post->desc) > 67 ? '...' : '' }}</td>
+                                        <td>{{ str_limit($post->desc, 67) }}</td>
                                         <td>{{ $carbon->toFormattedDateString($post->created_at) }}</td>
                                         <td>{{ $carbon->toFormattedDateString($post->updated_at) }}</td>
                                         <td class="text-center">

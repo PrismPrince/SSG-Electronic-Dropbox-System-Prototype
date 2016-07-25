@@ -72,7 +72,7 @@ class UserController extends Controller
             'fname' => 'required|regex:/[\s\-\.A-zÑñ]{1,255}/|max:255',
             'mname' => 'regex:/[\s\-\.A-zÑñ]{1,255}/|max:255',
             'lname' => 'required|regex:/[\s\-\.A-zÑñ]{1,255}/|max:255',
-            'username' => 'required|regex:/[\s\_\-\.A-zÑñ]{1,255}/|unique:users,username|min:6|max:255',
+            'username' => 'required|regex:/[\s\_\-\.0-9A-zÑñ]{1,255}/|unique:users,username|min:6|max:255',
             'email' => 'required|email|unique:users,email|max:255',
             'role' => 'required',
             'password' => 'required|min:6',
@@ -162,7 +162,7 @@ class UserController extends Controller
             'fname' => 'required|regex:/[\s\-\.A-zÑñ]{1,255}/|max:255',
             'mname' => 'regex:/[\s\-\.A-zÑñ]{1,255}/|max:255',
             'lname' => 'required|regex:/[\s\-\.A-zÑñ]{1,255}/|max:255',
-            'username' => 'required|regex:/[\s\_\-\.A-zÑñ]{1,255}/|unique:users,username,' . $id . '|min:6|max:255',
+            'username' => 'required|regex:/[\s\_\-\.0-9A-zÑñ]{1,255}/|unique:users,username,' . $id . '|min:6|max:255',
             'email' => 'required|email|unique:users,email,' . $id . '|max:255',
             'role' => 'required',
         ];

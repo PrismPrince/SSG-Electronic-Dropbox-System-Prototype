@@ -33,8 +33,8 @@
                 <li class="{{  Route::is('surveys.active') ? 'active' : '' }}" role="presentation">
                     <a href="{{ route('surveys.active') }}" role="tab" data-toggel="tab" aria-controls="surveys">Active Surveys <span class="badge">{{ $count['active'] }}</span></a>
                 </li>
-                <li class="{{  Route::is('surveys.inactive') ? 'active' : '' }}" role="presentation">
-                    <a href="{{ route('surveys.inactive') }}" role="tab" data-toggel="tab" aria-controls="surveys">Inactive Surveys <span class="badge">{{ $count['inactive'] }}</span></a>
+                <li class="{{  Route::is('surveys.pending') ? 'active' : '' }}" role="presentation">
+                    <a href="{{ route('surveys.pending') }}" role="tab" data-toggel="tab" aria-controls="surveys">Pending Surveys <span class="badge">{{ $count['pending'] }}</span></a>
                 </li>
                 <li class="{{  Route::is('surveys.expired') ? 'active' : '' }}" role="presentation">
                     <a href="{{ route('surveys.expired') }}" role="tab" data-toggel="tab" aria-controls="surveys">Expired Surveys <span class="badge">{{ $count['expired'] }}</span></a>
@@ -49,6 +49,7 @@
                                     <th class="text-center">Title</th>
                                     <th class="text-center">Author</th>
                                     <th class="text-center">Description</th>
+                                    <th class="text-center">Type</th>
                                     <th class="text-center">Options</th>
                                     <th class="text-center">Votes</th>
                                     <th class="text-center">Start</th>
@@ -62,16 +63,25 @@
                             <tbody>
                                 @foreach($surveys as $survey)
                                     <tr>
-                                        <td>{{ substr($survey->title, 0, 22) }}{{ strlen($survey->title) > 22 ? '...' : '' }}</td>
+                                        <td>{{ str_limit($survey->title, 22) }}</td>
                                         <td>{{ $survey->user->fname . ' ' . $survey->user->lname }}</td>
-                                        <td>{{ substr($survey->desc, 0, 47) }}{{ strlen($survey->desc) > 47 ? '...' : '' }}</td>
-                                        <td>{{ count($survey->options) }}</td>
-                                        <td>{{ $votes[$survey->id] }}</td>
-                                        <td>{{ $carbon->toFormattedDateString($survey->start) }}</td>
-                                        <td>{{ $carbon->toFormattedDateString($survey->end) }}</td>
-                                        <td>{{ ucfirst($survey->status) }}</td>
-                                        <td>{{ $carbon->toFormattedDateString($survey->created_at) }}</td>
-                                        <td>{{ $carbon->toFormattedDateString($survey->updated_at) }}</td>
+                                        <td>{{ str_limit($survey->desc, 47) }}</td>
+                                        <td class="text-center">
+                                            <span class="label label-{{ $survey->type == 'radio' ? 'warning' : 'success' }}">{{ $survey->type == 'radio' ? 'Vote Once' : 'Vote Many' }}</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge">{{ count($survey->options) }}</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge">{{ $votes[$survey->id] }}</span>
+                                        </td>
+                                        <td>{{ $carbon->parse($survey->start)->toFormattedDateString() }}</td>
+                                        <td>{{ $carbon->parse($survey->end)->toFormattedDateString() }}</td>
+                                        <td class="text-center">
+                                            <span class="label label-{{ $survey->status == 'active' ? 'info' : ($survey->status == 'pending' ? 'default' : 'danger') }}">{{ ucfirst($survey->status) }}</span>
+                                        </td>
+                                        <td>{{ $carbon->parse($survey->created_at)->toFormattedDateString() }}</td>
+                                        <td>{{ $carbon->parse($survey->updated_at)->toFormattedDateString() }}</td>
                                         <td class="text-center">
                                             {!! Form::open([
                                                 'method' => 'DELETE',

@@ -43,7 +43,7 @@ Route::get('/', 'HomeController@index'); // done
 Route::resource('suggest', 'SuggestionController', ['only' => ['create', 'store']]); // done
 Route::post('vote/{id}', 'SurveyController@vote'); // done
 Route::get('surveys/active', ['as' => 'surveys.active', 'uses' => 'SurveyController@active']);
-Route::get('surveys/inactive', ['as' => 'surveys.inactive', 'uses' => 'SurveyController@inactive']);
+Route::get('surveys/pending', ['as' => 'surveys.pending', 'uses' => 'SurveyController@pending']);
 Route::get('surveys/expired', ['as' => 'surveys.expired', 'uses' => 'SurveyController@expired']);
 Route::resource('surveys', 'SurveyController');
 

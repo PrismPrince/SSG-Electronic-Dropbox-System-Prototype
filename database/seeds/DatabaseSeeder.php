@@ -85,7 +85,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-	        'fname' => 'Ronne;',
+	        'fname' => 'Ronnel',
 	        'mname' => '',
 	        'lname' => 'Heredia',
 	        'username' => 'rh1234',

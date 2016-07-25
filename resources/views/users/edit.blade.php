@@ -62,7 +62,7 @@
                                 'class' => 'form-control',
                                 'required',
                                 'maxlength' => 255,
-                                'pattern' => '^[\s\_\-\.A-zÑñ]{1,255}$',
+                                'pattern' => '^[\s\_\-\.0-9A-zÑñ]{1,255}$',
                                 'data-error' => 'Please enter a valid username! Valid symbols: "_", ".","-"',
                                 'placeholder' => 'Enter your username...',
                             ]) !!}
@@ -114,10 +114,10 @@
                                     <dd>{{ $carbon->parse($user->updated_at)->diffForHumans() }}</dd>
                                 </dl>
                             </div>
-                            <div class="form-group col-lg-6">
+                            <div class="col-lg-6">
                                 {!! Html::linkRoute('users.show', 'Cancel', [$user->id], ['class' => 'btn btn-default btn-block']) !!}
                             </div>
-                            <div class="form-group col-lg-6">
+                            <div class="col-lg-6">
                                 {!! Form::button('Update', ['type' => 'submit', 'class' => 'btn btn-success btn-block']) !!}
                             </div>
                         </div>

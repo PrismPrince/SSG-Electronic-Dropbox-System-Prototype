@@ -14,11 +14,6 @@
                     'url' => 'surveys',
                 ]) !!}
 
-@if($errors->has('sh')||$errors->has('smin')||$errors->has('sap'))
-@foreach($errors as $error)
-{{ var_dump($error) }}
-@endforeach
-@endif
                     <div class="form-group has-feedback col-md-12{{ $errors->has('title') ? ' has-error has-danger' : '' }}">
                         {!! Form::label('title', 'Title', ['class' => 'control-label']) !!}
                         {!! Form::text('title', isset($title) ? $title : '', [

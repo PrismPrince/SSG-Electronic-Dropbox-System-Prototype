@@ -54,7 +54,7 @@
                         'class' => 'form-control',
                         'required',
                         'maxlength' => 255,
-                        'pattern' => '^[\s\_\-\.A-zÑñ]{1,255}$',
+                        'pattern' => '^[\s\_\-\.0-9A-zÑñ]{1,255}$',
                         'data-error' => 'Please enter a valid username! Valid symbols: "_", ".","-"',
                         'placeholder' => 'Enter your username...',
                     ]) !!}
