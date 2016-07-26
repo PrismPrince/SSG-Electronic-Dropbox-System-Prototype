@@ -20,7 +20,7 @@ class SurveyController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth', ['except' => ['vote', 'show']]);
 
         $surveys = Survey::all();
         $surveys->each(function ($item, $key)
@@ -97,7 +97,6 @@ class SurveyController extends Controller
     public function expired()
     {
         $carbon = new Carbon;
-
 
         $surveys = Survey::where('status', 'expired')->orderBy('updated_at', 'desc')->paginate(15);
 
@@ -312,7 +311,39 @@ class SurveyController extends Controller
     public function edit($id)
     {
         $survey = Survey::findOrFail($id);
-        return view('surveys.edit')->withSurvey($survey);
+        $options = Option::where('survey_id', $id)->get();
+
+        $start = Carbon::parse($survey->start);
+        $sm = $start->month;
+        $sd = $start->day;
+        $sy = $start->year;
+        $sh = $start->hour;
+        $smin = $start->minute;
+        $sap = $sh > 12 ? 'pm' : 'am';
+
+        $end = Carbon::parse($survey->end);
+        $em = $end->month;
+        $ed = $end->day;
+        $ey = $end->year;
+        $eh = $end->hour;
+        $emin = $end->minute;
+        $eap = $eh > 12 ? 'pm' : 'am';
+
+        return view('surveys.edit')
+            ->withSurvey($survey)
+            ->withOptions($options)
+            ->withSm($sm)
+            ->withSd($sd)
+            ->withSy($sy)
+            ->withSh($sh)
+            ->withSmin($smin)
+            ->withSap($sap)
+            ->withEm($em)
+            ->withEd($ed)
+            ->withEy($ey)
+            ->withEh($eh)
+            ->withEmin($emin)
+            ->withEap($eap);
     }
 
     public function update(Request $request, $id)
@@ -322,10 +353,10 @@ class SurveyController extends Controller
             return $answer != '';
         });
 
-        if ($answers->isEmpty()) {
+        if ($answers->isEmpty() || count($answers) > 2) {
 
             Session::flash('error_ans', 'Invalid answers!');
-            return view('surveys/create')
+            return redirect('surveys/' . $id . '/edit')
                 ->withTitle($request->title)
                 ->withDesc($request->desc)
                 ->withSm($request->sm)
@@ -383,7 +414,7 @@ class SurveyController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->fails()) return view('surveys.create')
+        if ($validator->fails()) return redirect('surveys/' . $id . '/edit')
             ->withTitle($request->title)
             ->withDesc($request->desc)
             ->withSm($request->sm)
@@ -424,7 +455,7 @@ class SurveyController extends Controller
 
             if (strtotime($start) <= time()) {
                 $errors['start'] = 'Starting date must not beyond current date and time!';
-                return view('surveys/create')
+                return redirect('surveys/' . $id . '/edit')
                     ->withTitle($request->title)
                     ->withDesc($request->desc)
                     ->withSm($request->sm)
@@ -443,7 +474,7 @@ class SurveyController extends Controller
                     ->withErrors($errors);
             } elseif (strtotime($end) <= strtotime($start)) {
                 $errors['end'] = 'End date must not beyond the starting date and time!';
-                return view('surveys/create')
+                return redirect('surveys/' . $id . '/edit')
                     ->withTitle($request->title)
                     ->withDesc($request->desc)
                     ->withSm($request->sm)
@@ -462,8 +493,7 @@ class SurveyController extends Controller
                     ->withErrors($errors);
             }
 
-            $survey = new Survey;
-            $survey->user_id = Auth::user()->id;
+            $survey = Survey::findOrFail($id);
             $survey->title = trim($request->title);
             $survey->desc = trim($request->desc);
             $survey->start = $start;
@@ -472,22 +502,59 @@ class SurveyController extends Controller
             $survey->type = trim($request->type);
             $survey->save();
 
-            foreach ($answers as $answer) {
-                $option = new Option;
-                $option->survey_id = $survey->id;
-                $option->answer = $answer;
-                $option->save();
+            $options = Option::where('survey_id', $id)->get();
+
+            if ($options->count() == count($answers)) {
+                foreach ($options as $option) {
+                    $option->answer = $answers[$option->id];
+                    $option->save();
+                }
+            } elseif ($options->count() < count($answers)) {
+                foreach ($options as $option) {
+                    $option->answer = $answers[$option->id];
+                    $option->save();
+                    array_forget($answers, $option->id);
+                }
+                foreach ($answers as $answer) {
+                    $option = new Option;
+                    $option->survey_id = $survey->id;
+                    $option->answer = $answer;
+                    $option->save();
+                }
+            } elseif ($options->count() > count($answers)) {
+                foreach ($options as $option) {
+                    if (array_has($answers, $option->id)) {
+                        $option->answer = $answers[$option->id];
+                        $option->save();
+                        array_forget($options, $option->id);
+                    } else {
+                        Option::where('id', $option->id)->delete();
+                    }
+                }
             }
         }
 
-        Session::flash('success', 'Your survey was successfully created.');
+        Session::flash('success', 'Your survey was successfully updated.');
 
         return redirect()->route('surveys.show', $survey->id);
     }
 
     public function destroy($id)
     {
-        //
+        $survey = Survey::findOrFail($id)->delete();
+        $title = $survey->title;
+
+        if($survey->user_id != Auth::user()->id) return redirect()->route('surveys.show', $survey->id);
+
+        $options = Option::where('survey_id', $survey->id)->get();
+        foreach ($options as $option) {
+            DB::table('option_student')->where('option_id', $option->id)->delete();
+            $option->delete();
+        }
+
+        Session::flash('success', "The survey <b>$title</b> was successfully deleted.");
+
+        return redirect()->route('surveys.index');
     }
 
     private function countSurveys() {
@@ -528,7 +595,7 @@ class SurveyController extends Controller
         if ($validator->fails()) return redirect('surveys/' . $id)->withErrors($validator)->withInput();
         else {
             
-            $survey = Survey::find($id);
+            $survey = Survey::findOrFail($id);
             $options = Option::where('survey_id', $survey->id)->get();
 
             foreach ($options as $option) {

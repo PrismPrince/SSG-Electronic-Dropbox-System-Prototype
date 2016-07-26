@@ -7,16 +7,17 @@
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
 
-                {!! Form::open([
+                {!! Form::model($survey, [
+                    'route' => ['surveys.update', $survey->id],
+                    'method' => 'put',
                     'class' => 'form-horizontal',
                     'data-toggle' => 'validator',
                     'role' => 'form',
-                    'url' => 'surveys',
                 ]) !!}
 
                     <div class="form-group has-feedback col-md-12{{ $errors->has('title') ? ' has-error has-danger' : '' }}">
                         {!! Form::label('title', 'Title', ['class' => 'control-label']) !!}
-                        {!! Form::text('title', isset($title) ? $title : '', [
+                        {!! Form::text('title', old('title'), [
                             'class' => 'form-control',
                             'required',
                             'maxlength' => 255,
@@ -183,15 +184,15 @@
                         {!! Form::label('type', 'Type', ['class' => 'control-label']) !!}
                         <select name="type" class="form-control" data-error="Please select one option!" required>
                             <option value="" >Choose how the students vote...</option>
-                            <option value="radio" {{ isset($type) ? 'selected' : '' }}>Vote only one option</option>
-                            <option value="checkbox" {{ isset($type) ? 'selected' : '' }}>Vote more than one option</option>
+                            <option value="radio" {{ $survey->type == 'radio' ? 'selected' : '' }}>Vote only one option</option>
+                            <option value="checkbox" {{ $survey->type == 'checkbox' ? 'selected' : '' }}>Vote more than one option</option>
                         </select>
                         <div class="help-block with-errors">{{ $errors->has('type') ? $errors->first('type') : '' }}</div>
                     </div>
 
                     <div class="form-group has-feedback col-md-12{{ $errors->has('desc') ? ' has-error has-danger' : '' }}">
                         {!! Form::label('desc', 'Description', ['class' => 'control-label']) !!}
-                        {!! Form::textarea('desc', isset($desc) ? $desc : '', [
+                        {!! Form::textarea('desc', old('desc'), [
                             'class' => 'form-control',
                             'required',
                             'rows' => 3,
@@ -213,47 +214,27 @@
                     @endif
 
                     <div id="_answers">
-                        <div class="form-group col-md-4">
+                        <div class="row col-md-12">
                             {!! Form::label('answers[]', 'Answers (at least 2 answers)', ['class' => 'control-label']) !!}
-                            {!! Form::text('answers[]', old('answers'), [
-                                'class' => 'form-control',
-                                'id' => 'answers',
-                                'required',
-                                'maxlength' => 255,
-                                'pattern' => '^[\s\_\-\:\.\,\?\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}$',
-                                'data-error' => 'Please enter a valid input!',
-                                'placeholder' => 'Answer...',
-                            ]) !!}
                         </div>
-
-                        <div class="form-group col-md-4" style="margin-top:27px;margin-left:15px">
-                            {!! Form::text('answers[]', old('answers'), [
-                                'class' => 'form-control',
-                                'id' => 'answers',
-                                'required',
-                                'maxlength' => 255,
-                                'pattern' => '^[\s\_\-\:\.\,\?\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}$',
-                                'data-error' => 'Please enter a valid input!',
-                                'placeholder' => 'Answer...',
-                            ]) !!}
-                        </div>
-
-                        <div class="form-group col-md-4" style="margin-top:27px;margin-left:15px">
-                            {!! Form::text('answers[]', old('answers'), [
-                                'class' => 'form-control',
-                                'id' => 'answers',
-                                'maxlength' => 255,
-                                'pattern' => '^[\s\_\-\:\.\,\?\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}$',
-                                'data-error' => 'Please enter a valid input!',
-                                'placeholder' => 'Answer...',
-                            ]) !!}
-                        </div>
+                        @foreach($options as $option)
+                            <div class="form-group col-md-4">
+                                {!! Form::text('answers[' . $option->id . ']', $option->answer, [
+                                    'class' => 'form-control',
+                                    'id' => 'answers',
+                                    'maxlength' => 255,
+                                    'pattern' => '^[\s\_\-\:\.\,\?\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}$',
+                                    'data-error' => 'Please enter a valid input!',
+                                    'placeholder' => 'Answer...',
+                                ]) !!}
+                            </div>
+                        @endforeach
                     </div>
 
 
                     <div class="form-group col-md-12">
                         {!! Form::button('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>', ['type' => 'button', 'class' => 'btn btn-success', 'id' => 'add-answer']) !!}
-                        {!! Form::button('Post', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
+                        {!! Form::button('Update', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
                         {!! Html::linkRoute('surveys.index', 'Cancel', null, ['class' => 'btn btn-default']) !!}
                     </div>
                 {!! Form::close() !!}
@@ -267,7 +248,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('#add-answer').on('click', function(){
-                $('#_answers').append('<div class="form-group col-md-4" style="margin-right:15px">{{ Form::text('answers[]', old('answers[]'), [
+                $('#_answers').append('<div class="form-group col-md-4" style="margin-right:15px">{{ Form::text('answers[]', null, [
                     'class' => 'form-control',
                     'id' => 'answers',
                     'maxlength' => 255,
