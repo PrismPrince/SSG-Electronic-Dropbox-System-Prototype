@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('status', 10)->default('active');
             $table->string('role')->default('moderator');
-            $table->string('pic')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

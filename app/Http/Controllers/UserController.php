@@ -10,7 +10,9 @@ use Session;
 use App\User;
 use App\Post;
 use Validator;
+use App\Survey;
 use Carbon\Carbon;
+use App\Http\Controllers\Upload;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -131,9 +133,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $carbon = new Carbon;
-        $user = User::findOrFail($id);
-        return view('users.show')->withUser($user)->withCarbon($carbon);
+        return $this->profileTimeline($id);
     }
 
     /**
@@ -234,5 +234,90 @@ class UserController extends Controller
         $count['moderator'] = User::where('role', 'moderator')->get()->count();
 
         return $count;
+    }
+
+    public function profileTimeline($id)
+    {
+        $user = User::findOrFail($id);
+
+        $posts = Post::where('user_id', $id)->paginate(5);
+        $surveys = Survey::where('user_id', $id)->paginate(5);
+
+        $total = $posts->total() + $surveys->total();
+        $perPage = $posts->perPage() + $surveys->perPage();
+        $items = array_merge($posts->items(), $surveys->items());
+        $items = collect($items)->sortByDesc('created_at')->all();
+
+        $paginator = new LengthAwarePaginator($items, $total, $perPage);
+        $paginator->setPath(request()->getPathInfo());
+
+        return view('users.profile_timeline')->withUser($user)->withActivities($paginator);
+    }
+
+    public function profileAbout($id)
+    {
+        $user = User::findOrFail($id);
+
+        return view('users.profile_about')->withUser($user);
+    }
+
+    public function profilePosts($id)
+    {
+        $user = User::findOrFail($id);
+
+        $posts = Post::where('user_id', $id)->orderBy('created_at', 'desc')->paginate(15);
+
+        return view('users.profile_timeline')->withUser($user)->withActivities($posts);
+    }
+
+    public function profileSurveys($id)
+    {
+        $user = User::findOrFail($id);
+
+        $surveys = Survey::where('user_id', $id)->orderBy('created_at', 'desc')->paginate(5);
+
+        return view('users.profile_timeline')->withUser($user)->withActivities($surveys);
+    }
+
+    public function upload($id) {
+        return view('users.upload');
+    }
+
+    public function uploaded(Request $request, $id) {
+
+        $handle = new Upload($request->file('image'));
+    
+        if($handle->uploaded){
+            $handle->image_resize = true;
+            $handle->image_ratio_fill = true;
+            $handle->image_y = 500;
+            $handle->image_x = 500;
+            $handle->file_overwrite = true;
+            $handle->file_new_name_body = '_' . rand(1000000, 9999999) . '_';
+            $handle->file_name_body_add = rand(1000, 9999);
+            $handle->file_name_body_pre = date('mdYHms', time());
+            $handle->file_new_name_ext = '.0';
+            $full_filename = $file_name_body_pre . $file_new_name_body . $file_name_body_add . $file_new_name_ext;
+
+            $handle->Process(storage_path('app/users'));
+            
+            if($handle->processed){
+                try{
+                    // Saving the name to the database
+
+                    // $stmt = $pdo->prepare('UPDATE users SET pic = ? WHERE userID = ' . $_SESSION['userID']);
+                    // $stmt->execute(array($handle->file_dst_name));
+                } catch(PDOException $e){
+                    // $html->alertWarning('<b>Sorry!</b> Upload not succesfull');
+                }
+                $handle->Clean();
+                return redirect('users/' . $id . '/edit');
+            } else{
+                $error = $handle->error;
+                $handle->Clean();
+                return $error;
+            }
+        } else return $handle->error;
+        return view('users.edit');
     }
 }

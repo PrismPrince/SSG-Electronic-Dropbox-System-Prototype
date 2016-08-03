@@ -7,29 +7,42 @@
     <title>@yield('title')</title>
 
     {!! Html::style('css/bootstrap.min.css') !!}
-    {!! Html::style('css/bootstrap-theme.min.css') !!}
+    <!--{!! Html::style('css/bootstrap-theme.min.css') !!}-->
     {!! Html::style('css/custom.css') !!}
+    {!! Html::style('https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700') !!}
 
     <style type="text/css">
-        /* latin */
-        @font-face {
-          font-family: 'Droid Sans';
-          font-style: normal;
-          font-weight: 400;
-          src: local('Droid Sans'), local('DroidSans'), url(http://fonts.gstatic.com/s/droidsans/v6/s-BiyweUPV0v-yRb-cjciPk_vArhqVIZ0nv9q090hN8.woff2) format('woff2');
-          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-        }
-        /* latin */
-        @font-face {
-          font-family: 'Droid Sans';
-          font-style: normal;
-          font-weight: 700;
-          src: local('Droid Sans Bold'), local('DroidSans-Bold'), url(http://fonts.gstatic.com/s/droidsans/v6/EFpQQyG9GqCrobXxL-KRMYWiMMZ7xLd792ULpGE4W_Y.woff2) format('woff2');
-          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-        }
         body {
-            font-family: 'Droid Sans', Arial, Helvetica, Geneva, sans-serif;
+            background-color: #e9ebee;
         }
+        nav.navbar {
+            background-color: #3b5998;
+            border-bottom: 1px solid #29487d;
+        }
+        nav.navbar button > span {
+            background-color: #fff;
+        }
+        .nb-bnt, .nb-brnd, .nb-m-l > li > a, .nb-u > li > a,
+        .nb-d > a {
+            color: #fff;
+        }
+        .nb-d-m > li > a:hover, .nb-d-m > li > a:focus {
+            background-color: #4267b2;
+            color: #fff;
+        }
+        .open > a {
+            background-color: #4267b2 !important;
+            color: #fff;
+        }
+        .nb-m-l > li > a:focus, .nb-u > li > a:focus,
+        .nb-m-l > li > a:hover, .nb-u > li > a:hover {
+            background-color: #4267b2;
+            color: #fff;
+        }
+        .nb-brnd:hover, .nb-brnd:focus {
+            color: #fff;
+        }
+        
     </style>
 
     @yield('styles')
@@ -37,6 +50,7 @@
     {!! Html::script('js/jquery.min.js') !!}
     {!! Html::script('js/bootstrap.min.js') !!}
     {!! Html::script('js/validator.min.js') !!}
+    {!! Html::script('js/momentjs.js') !!}
 
     @yield('scripts')
 </head>

@@ -6,7 +6,8 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
-
+            <div class="panel panel-info">
+            <div class="panel-body">
                 {!! Form::open([
                     'class' => 'form-horizontal',
                     'data-toggle' => 'validator',
@@ -98,8 +99,17 @@
                     </div>
 
                 {!! Form::close() !!}
+            </div></div>
 
             </div>
         </div>
     </div>
+@endsection
+
+@section('styles')
+    <style type="text/css">
+        .form-group {
+            margin-left: 0 !important;
+        }
+    </style>
 @endsection

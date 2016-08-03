@@ -35,7 +35,7 @@ class UsersTableSeeder extends Seeder
 	        'lname' => 'Pacilan',
 	        'username' => 'PrismPrince', // unique | min:6
 	        'email' => 'davedanepacilan3p@gmail.com', // unique
-	        'password' => Hash::make('sugarcane'), // min:8
+	        'password' => Hash::make('12345678'), // min:8
 	        'role' => 'admin',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
@@ -46,7 +46,7 @@ class UsersTableSeeder extends Seeder
 	        'lname' => 'Sebial',
 	        'username' => 'Chiarra',
 	        'email' => 'chiarra97@gmail.com',
-	        'password' => Hash::make('chiarra'),
+	        'password' => Hash::make('12345678'),
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -57,7 +57,7 @@ class UsersTableSeeder extends Seeder
 	        'lname' => 'Alegre',
 	        'username' => 'MaDivina',
 	        'email' => 'iyatot@gmail.com',
-	        'password' => Hash::make('iyatot12'),
+	        'password' => Hash::make('12345678'),
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -86,7 +86,7 @@ class UsersTableSeeder extends Seeder
 
         DB::table('users')->insert([
 	        'fname' => 'Ronnel',
-	        'mname' => '',
+	        'mname' => 'Motesa',
 	        'lname' => 'Heredia',
 	        'username' => 'rh1234',
 	        'email' => 'rh1234@gmail.com',
@@ -97,7 +97,7 @@ class UsersTableSeeder extends Seeder
 
         DB::table('users')->insert([
 	        'fname' => 'Sealtiel Kent',
-	        'mname' => '',
+	        'mname' => 'Obial',
 	        'lname' => 'Generale',
 	        'username' => 'CaptainLevi',
 	        'email' => 'captainlevi@gmail.com',
@@ -107,33 +107,33 @@ class UsersTableSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-	        'fname' => 'Hoshin',
-	        'mname' => '',
-	        'lname' => 'Kanri',
-	        'username' => 'hoshin',
-	        'email' => 'hoshin@gmail.com',
+	        'fname' => 'Jesscel',
+	        'mname' => 'Pepito',
+	        'lname' => 'Zapanta',
+	        'username' => 'Jesscel',
+	        'email' => 'jesscelzapanta@gmail.com',
 	        'password' => Hash::make('12345678'),
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
 
         DB::table('users')->insert([
-	        'fname' => 'Lady',
-	        'mname' => '',
-	        'lname' => 'Gaga',
-	        'username' => 'LadyGaga',
-	        'email' => 'ladygaga@gmail.com',
+	        'fname' => 'Jullianne Kae',
+	        'mname' => 'Tajanlangit',
+	        'lname' => 'Pongasi',
+	        'username' => 'JKpongasi',
+	        'email' => 'julliannepongasi@gmail.com',
 	        'password' => Hash::make('12345678'),
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
 
         DB::table('users')->insert([
-	        'fname' => 'Rumpelstiltskin',
-	        'mname' => '',
-	        'lname' => 'Rumple',
-	        'username' => 'rumple',
-	        'email' => 'rumpelstiltskin@gmail.com',
+	        'fname' => 'April Grace',
+	        'mname' => 'Amit',
+	        'lname' => 'Mongaya',
+	        'username' => 'AGmongaya',
+	        'email' => 'aprilgracemongaya@gmail.com',
 	        'password' => Hash::make('12345678'),
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
@@ -157,7 +157,7 @@ class PostsTableSeeder extends Seeder
         DB::table('posts')->insert([
 	        'user_id' => 1000000006,
 	        'title' => 'Facundo Lamu',
-	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus vitae voluptatem sequi culpa nisi ullam facilis, incidunt maxime asperiores libero ex minima perferendis tempore, voluptates, minus unde sed aperiam? Qui.',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -165,7 +165,7 @@ class PostsTableSeeder extends Seeder
         DB::table('posts')->insert([
 	        'user_id' => 1000000002,
 	        'title' => 'Another Title',
-	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius suscipit cumque doloribus beatae modi sint voluptates, dicta debitis? Similique ratione commodi in, ipsam deserunt cupiditate error hic rerum. Cupiditate, eligendi. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -173,7 +173,7 @@ class PostsTableSeeder extends Seeder
         DB::table('posts')->insert([
 	        'user_id' => 1000000001,
 	        'title' => 'Some Title',
-	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae hic fugiat laudantium obcaecati deleniti. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima sapiente fugiat, corporis facere amet. Voluptates repellendus, accusantium inventore pariatur eos tenetur hic vel nostrum ullam eveniet, in repudiandae impedit nihil. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -189,7 +189,7 @@ class PostsTableSeeder extends Seeder
         DB::table('posts')->insert([
 	        'user_id' => 1000000009,
 	        'title' => 'Simple Plan',
-	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi, iusto blanditiis fugit minima reiciendis nemo, dicta corporis magnam, recusandae, delectus vero facilis deserunt eos neque porro voluptas eligendi odit. Accusamus! Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -197,7 +197,7 @@ class PostsTableSeeder extends Seeder
         DB::table('posts')->insert([
 	        'user_id' => 1000000003,
 	        'title' => 'Another Title',
-	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit, facilis et. Aliquid consequuntur sit aut nam cum doloremque laudantium? Deleniti magnam ea odit voluptas eaque ratione ullam dolorum, quod cumque! Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -205,7 +205,7 @@ class PostsTableSeeder extends Seeder
         DB::table('posts')->insert([
 	        'user_id' => 1000000005,
 	        'title' => 'Goshness',
-	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi id nemo rem, repellat illo necessitatibus tempore eos, quam unde doloremque aperiam et fugit sint nisi earum. Voluptatibus omnis, laudantium assumenda. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -213,7 +213,7 @@ class PostsTableSeeder extends Seeder
         DB::table('posts')->insert([
 	        'user_id' => 1000000007,
 	        'title' => 'The F!',
-	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quo nostrum nobis voluptas amet vel iure obcaecati animi odit molestias reprehenderit facilis earum impedit nam laboriosam dolores, enim laborum iusto eveniet! Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -221,7 +221,95 @@ class PostsTableSeeder extends Seeder
         DB::table('posts')->insert([
 	        'user_id' => 1000000008,
 	        'title' => 'OMG, Oh My Girl',
-	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor quasi nobis fugiat sequi, obcaecati provident eligendi voluptates cum autem, saepe quisquam et ad quod natus sunt repudiandae. Ex, unde numquam. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+
+        DB::table('posts')->insert([
+	        'user_id' => 1000000009,
+	        'title' => 'OMG, Oh My Girl',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, facilis et, ipsam at consectetur, eos beatae optio magni harum voluptates vitae corrupti itaque? Dicta, necessitatibus a excepturi voluptas fugiat incidunt. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+
+        DB::table('posts')->insert([
+	        'user_id' => 1000000005,
+	        'title' => 'OMG, Oh My Girl',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae aspernatur perferendis laborum omnis repellat, id. Quo quidem, vitae fugit? Pariatur hic, placeat, perferendis unde voluptas praesentium vero illum ipsa error. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+
+        DB::table('posts')->insert([
+	        'user_id' => 1000000001,
+	        'title' => 'OMG, Oh My Girl',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa reiciendis, maiores exercitationem non corrupti id debitis, et dolorem numquam at, harum ab commodi. Provident voluptas, ex officiis nesciunt atque aperiam? Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+
+        DB::table('posts')->insert([
+	        'user_id' => 1000000007,
+	        'title' => 'OMG, Oh My Girl',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla iste repudiandae nesciunt ea nihil a vitae totam cum nostrum, repellendus, quidem accusantium, dolorum reiciendis quisquam facere adipisci. Labore eligendi, maxime. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+
+        DB::table('posts')->insert([
+	        'user_id' => 1000000003,
+	        'title' => 'OMG, Oh My Girl',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque optio consequuntur vero, voluptatem omnis corporis facere ex dolorem ratione tempora ipsum impedit, quo consectetur, ut beatae ipsa laboriosam iusto. Nostrum! Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+
+        DB::table('posts')->insert([
+	        'user_id' => 1000000004,
+	        'title' => 'OMG, Oh My Girl',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni consequuntur suscipit mollitia quis distinctio nulla velit cupiditate quas corporis iusto impedit consequatur architecto quos aliquam beatae similique porro, maxime molestiae. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+
+        DB::table('posts')->insert([
+	        'user_id' => 1000000006,
+	        'title' => 'OMG, Oh My Girl',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat voluptate sit autem sapiente omnis repudiandae natus veritatis. Beatae illo, earum architecto laudantium, culpa nemo et provident, illum esse, maiores assumenda. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+
+        DB::table('posts')->insert([
+	        'user_id' => 1000000004,
+	        'title' => 'OMG, Oh My Girl',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat voluptate sit autem sapiente omnis repudiandae natus veritatis. Beatae illo, earum architecto laudantium, culpa nemo et provident, illum esse, maiores assumenda. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+
+        DB::table('posts')->insert([
+	        'user_id' => 1000000002,
+	        'title' => 'OMG, Oh My Girl',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat voluptate sit autem sapiente omnis repudiandae natus veritatis. Beatae illo, earum architecto laudantium, culpa nemo et provident, illum esse, maiores assumenda. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+
+        DB::table('posts')->insert([
+	        'user_id' => 1000000008,
+	        'title' => 'OMG, Oh My Girl',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat voluptate sit autem sapiente omnis repudiandae natus veritatis. Beatae illo, earum architecto laudantium, culpa nemo et provident, illum esse, maiores assumenda. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+
+        DB::table('posts')->insert([
+	        'user_id' => 1000000000,
+	        'title' => 'OMG, Oh My Girl',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat voluptate sit autem sapiente omnis repudiandae natus veritatis. Beatae illo, earum architecto laudantium, culpa nemo et provident, illum esse, maiores assumenda. Velit recusandae hic fugiat laudantium obcaecati deleniti. Sint doloremque facere aspernatur id, quae libero vel, eos in suscipit corporis ducimus asperiores mollitia.',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -237,8 +325,8 @@ class SurveysTableSeeder extends Seeder
 	        'user_id' => 1000000000, // on:users
 	        'title' => 'Apple, Orange, Banana',
 	        'desc' => 'Love them? Which is healthy for you? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium voluptates esse excepturi veritatis officia non at voluptas, illo ducimus voluptatum libero ea perferendis itaque accusantium expedita. Commodi rerum ad labore.',
-	        'start' => date('Y-m-d H:i:s', time()),
-	        'end' => date('Y-m-d H:i:s', time()),
+	        'start' => date('Y-m-d H:i:s', time() + 604800),
+	        'end' => date('Y-m-d H:i:s', time() + 1209600),
 	        'status' => 'active', // value:active,,inactive,expired
 	        'type' => 'checkbox', // value:checkbox,radio
 	        'created_at' => date('Y-m-d H:i:s', time()),
@@ -249,8 +337,8 @@ class SurveysTableSeeder extends Seeder
 	        'user_id' => 1000000003,
 	        'title' => 'Pak o Ganern',
 	        'desc' => "Pak! Kung mo togut kang ipa tang-tang ang imong lipstick na pula kaayo\r\r\rGanern! Kung gusto nimo di ka pasudlon sa school! HAGBUNGON BE!!!",
-	        'start' => date('Y-m-d H:i:s', time()),
-	        'end' => date('Y-m-d H:i:s', time()),
+	        'start' => date('Y-m-d H:i:s', time() - 604800),
+	        'end' => date('Y-m-d H:i:s', time() + 604800),
 	        'status' => 'active',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
@@ -260,8 +348,8 @@ class SurveysTableSeeder extends Seeder
 	        'user_id' => 1000000009,
 	        'title' => 'Yes! No!',
 	        'desc' => "Gwapa si CHIARRA??? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure explicabo id aliquam ab facilis eveniet dolores, odit odio, aliquid repellat ipsa nisi, numquam voluptate harum soluta deleniti ut reprehenderit deserunt!",
-	        'start' => date('Y-m-d H:i:s', time()),
-	        'end' => date('Y-m-d H:i:s', time()),
+	        'start' => date('Y-m-d H:i:s', time() - 1209600),
+	        'end' => date('Y-m-d H:i:s', time() - 604800),
 	        'status' => 'active',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
@@ -271,8 +359,8 @@ class SurveysTableSeeder extends Seeder
 	        'user_id' => 1000000002,
 	        'title' => 'Pili sa maay0: Lenovo, Asus, HP, Secondhand?',
 	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure explicabo id aliquam ab facilis eveniet dolores, odit odio, aliquid repellat ipsa nisi, numquam voluptate harum soluta deleniti ut reprehenderit deserunt!',
-	        'start' => date('Y-m-d H:i:s', time()),
-	        'end' => date('Y-m-d H:i:s', time()),
+	        'start' => date('Y-m-d H:i:s', time() - 604799),
+	        'end' => date('Y-m-d H:i:s', time() + 604800),
 	        'status' => 'active',
 	        'type' => 'checkbox',
 	        'created_at' => date('Y-m-d H:i:s', time()),
@@ -394,6 +482,22 @@ class StudentsTableSeeder extends Seeder
 	        'fname' => 'Rachel Anne',
 	        'mname' => 'Agravante',
 	        'lname' => 'Quiamco',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+        DB::table('students')->insert([
+	        'id' => 1142326,
+	        'fname' => 'Sealtiel Kent',
+	        'mname' => 'Obial',
+	        'lname' => 'Generale',
+	        'created_at' => date('Y-m-d H:i:s', time()),
+	        'updated_at' => date('Y-m-d H:i:s', time()),
+        ]);
+        DB::table('students')->insert([
+	        'id' => 1144924,
+	        'fname' => 'Ronnel',
+	        'mname' => 'Motesa',
+	        'lname' => 'Heredia',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);

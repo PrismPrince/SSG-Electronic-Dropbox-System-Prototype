@@ -15,6 +15,10 @@
 Route::get('posts/me', ['as' => 'posts.me', 'uses' => 'PostController@me']); // done
 Route::get('posts/other', ['as' => 'posts.other', 'uses' => 'PostController@other']); // done
 Route::resource('posts', 'PostController'); // done
+Route::get('profile/{id}/timeline', ['as' => 'profile.timeline', 'uses' => 'UserController@profileTimeline']);
+Route::get('profile/{id}/about', ['as' => 'profile.about', 'uses' => 'UserController@profileAbout']);
+Route::get('profile/{id}/posts', ['as' => 'profile.posts', 'uses' => 'UserController@profilePosts']);
+Route::get('profile/{id}/surveys', ['as' => 'profile.surveys', 'uses' => 'UserController@profileSurveys']);
 
 // admin
 Route::get('admin', 'HomeController@admin'); // done
@@ -40,6 +44,7 @@ Route::get('logout', 'Auth\AuthController@logout');
 
 // students
 Route::get('/', 'HomeController@index'); // done
+Route::get('home', 'HomeController@home'); // done
 Route::resource('suggest', 'SuggestionController', ['only' => ['create', 'store']]); // done
 Route::post('vote/{id}', 'SurveyController@vote'); // done
 Route::get('surveys/active', ['as' => 'surveys.active', 'uses' => 'SurveyController@active']);

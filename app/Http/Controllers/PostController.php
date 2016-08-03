@@ -82,7 +82,7 @@ class PostController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->fails()) return redirect('posts/create')->withErrors($validator)->withInput();
+        if ($validator->fails()) return redirect('home')->withErrors($validator)->withInput();
         else {
             $post = new Post;
             $post->user_id = Auth::user()->id;
@@ -90,10 +90,14 @@ class PostController extends Controller
             $post->desc = trim($request->desc);
             $post->save();
 
-            Session::flash('success', 'Your post was successfully posted.');
-
-            return redirect()->route('posts.show', $post->id);
+            if($this->upload($request, $post->id)) {
+                Session::flash('success', 'Your post was successfully posted.');
+            } else {
+                Session::flash('error', 'Unable to upload photo.');
+                return redirect('home')->withInput();
+            }
         }
+        return redirect('home');
     }
 
     /**
@@ -196,5 +200,30 @@ class PostController extends Controller
         $count['other'] = Post::where('user_id','!=', Auth::user()->id)->get()->count();
 
         return $count;
+    }
+
+    private function upload($request, $id) {
+
+        $handle = new Upload($request->file('image')->getRealPath());
+    
+        if($handle->uploaded){
+            echo 'yehey';
+            $handle->file_overwrite = true;
+            $handle->image_background_color = 'ffffff';
+            $handle->file_new_name_body = $id;
+            $handle->file_new_name_ext = 'x';
+            
+            $handle->Process(storage_path('app/public/posts'));
+            
+            if($handle->processed){
+                $handle->Clean();
+                return true;
+            } else{
+                $error = $handle->error;
+                $handle->Clean();
+                return dd($error);
+            }
+        } else return dd($handle->error);
+        return true;
     }
 }

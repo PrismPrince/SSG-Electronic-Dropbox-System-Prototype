@@ -1,16 +1,14 @@
-@extends('layouts.articles')
+@extends('layouts.profile')
 
-@section('title', 'SSG Survey System')
-
-@section('h-c')
+@section('p-c')
     @include('partials._panel_idea')
 @endsection
 
-@section('b-c')
+@section('p-con')
     @include('partials._panel_activities')
 @endsection
 
-@section('pager')
+@section('paginator')
 <nav aria-label="paginator">
     <ul class="pager">
         @if ($activities->previousPageUrl())
@@ -24,6 +22,7 @@
 @endsection
 
 @section('styles')
+    @include('partials._style_profile')
     @include('partials._style_a')
     @include('partials._style_c')
 @endsection

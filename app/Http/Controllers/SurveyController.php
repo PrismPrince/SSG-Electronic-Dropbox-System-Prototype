@@ -20,7 +20,8 @@ class SurveyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['vote', 'show']]);
+        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);        
+        $this->middleware('guest', ['only' => ['vote']]);
 
         $surveys = Survey::all();
         $surveys->each(function ($item, $key)
@@ -51,7 +52,7 @@ class SurveyController extends Controller
 
         $count = $this->countSurveys();
 
-        return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count)->withCarbon($carbon);
+        return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count);
     }
 
     public function active()
@@ -71,7 +72,7 @@ class SurveyController extends Controller
 
         $count = $this->countSurveys();
 
-        return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count)->withCarbon($carbon);
+        return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count);
     }
 
     public function pending()
@@ -91,7 +92,7 @@ class SurveyController extends Controller
 
         $count = $this->countSurveys();
 
-        return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count)->withCarbon($carbon);
+        return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count);
     }
 
     public function expired()
@@ -111,7 +112,7 @@ class SurveyController extends Controller
 
         $count = $this->countSurveys();
 
-        return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count)->withCarbon($carbon);
+        return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count);
     }
 
     public function create()
@@ -305,7 +306,7 @@ class SurveyController extends Controller
             }
         }
 
-        return view('surveys.show')->withSurvey($survey)->withVotes($votes)->withCarbon($carbon);
+        return view('surveys.show')->withSurvey($survey)->withVotes($votes);
     }
 
     public function edit($id)

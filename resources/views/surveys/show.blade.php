@@ -8,6 +8,44 @@
             <div class="col-md-10 col-md-offset-1">
                 @include('partials._alert')
             </div>
+
+<div class="panel panel-info">
+    <div class="panel-body clearfix">
+        <h5 class="a-h col-xs-11">
+            <b class="a-h-n">{{ $survey->user->fname . ' ' . $survey->user->lname }}</b>
+            conducted a survey about
+            <a href="#" class="a-h-l">{{ $survey->title }}</a>
+            <br><small class="a-h-d a-tt">{{ $survey->created_at }}</small>
+        </h5>
+        <div class="col-xs-1 text-right">
+            @if(Auth::guest())
+                {{ '' }}
+            @elseif($survey->user->id == Auth::user()->id)
+                <a class="a-o" data-placement="bottom" data-content='
+                    {!! Form::open([
+                        'method' => 'DELETE',
+                        'route' => ['surveys.destroy', $survey->id],
+                        'class' => 'form-horizontal'
+                    ]) !!}
+                    <a href="{{ url('surveys/' . $survey->id . '/edit') }}" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs']) !!}
+                    {!! Form::close() !!}
+                '><span class="caret"></span></a>
+            @endif
+        </div>
+        <p class="col-xs-12">{{ str_limit($survey->desc, 500) }}</p><hr>
+        <div class="col-xs-12 a-f">
+            <a href="{{ url('surveys/' . $survey->id) }}" class="btn btn-info btn-xs">Read More</a>
+            <span class="a-tt" title="{{ count($survey->options) . ' ' . str_plural('option', count($survey->options)) }}">
+                <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> {{ count($survey->options) }}
+            </span>
+            <span class="label label-{{ $survey->status == 'active' ? 'success' : ($survey->status == 'pending' ? 'default' : 'danger') }}">{{ ucfirst($survey->status) }}</span>
+            <span class="a-f-{{ $survey->status == 'active' ? 'a' : ($survey->status == 'pending' ? 'p' : 'e') }} a-tt">{{ $survey->status == 'pending' ? $survey->start : ($survey->status == 'pending' ? $survey->end : $survey->end) }}</span>
+        </div>
+    </div>
+</div>
+
+
             {!! Form::open([
                 'data-toggle' => 'validator',
                 'role' => 'form',
@@ -36,7 +74,7 @@
                                 </div>
                                 <div class="row col-sm-9">
                                     <div class="progress">
-                                        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{ $votes[$option->id] }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ $votes[$option->id] }}%">{{ $votes[$option->id] }}%</div>
+                                        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{ $votes[$option->id] }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ $votes[$option->id] }}%">{{ round($votes[$option->id], 2) }}%</div>
                                     </div>
                                 </div>
                             </div>
@@ -56,9 +94,9 @@
                                         <dt>Author</dt>
                                         <dd>{{ $survey->user->fname . ' ' . $survey->user->lname }}</dd>
                                         <dt>Starts</dt>
-                                        <dd>{{ $carbon->parse($survey->start)->toFormattedDateString() }} <small>({{ $carbon->parse($survey->start)->diffForHumans() }})</small></dd>
+                                        <dd>{{ $survey->start }} <small>({{ $survey->start }})</small></dd>
                                         <dt>Ends</dt>
-                                        <dd>{{ $carbon->parse($survey->end)->toFormattedDateString() }} <small>({{ $carbon->parse($survey->end)->diffForHumans($carbon->copy()->now()) }})</small></dd>
+                                        <dd>{{ $survey->end }} <small>({{ $survey->end }})</small></dd>
                                     </dl>
                                 </div>
                             </div>

@@ -1,9 +1,9 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-static-top">
     <div class="container">
         <div class="navbar-header">
 
             <!-- Collapsed Hamburger -->
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+            <button type="button" class="navbar-toggle nb-btn collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                 <span class="sr-only">Toggle Navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -11,34 +11,28 @@
             </button>
 
             <!-- Branding Image -->
-            {!! Html::link('/', 'Prism', ['class' => 'navbar-brand']) !!}
+            {!! Html::link('/', 'Prism', ['class' => 'navbar-brand nb-brnd']) !!}
 
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav nb-m-l">
 
-                @if(Auth::guest())
                     <li>{!! Html::link('home', 'Home') !!}</li>
+                @if(Auth::guest())
                     <li>{!! Html::link('suggest/create', 'Suggest') !!}</li>
+                    <li>{!! Html::link('surveys', 'Surveys') !!}</li>
                 @elseif(Auth::user()->role == 'admin')
-                    <li>{!! Html::link('admin', 'Home') !!}</li>
-                    <li>{!! Html::link('posts', 'Posts') !!}</li>
-                    <li>{!! Html::link('surveys', 'Surveys') !!}</li>
                     <li>{!! Html::link('suggestions', 'Suggestions') !!}</li>
-                    <li>{!! Html::link('users', 'Users') !!}</li>
                 @elseif(Auth::user()->role == 'moderator')
-                    <li>{!! Html::link('moderator', 'Home') !!}</li>
-                    <li>{!! Html::link('posts', 'Posts') !!}</li>
-                    <li>{!! Html::link('surveys', 'Surveys') !!}</li>
                     <li>{!! Html::link('suggestions', 'Suggestions') !!}</li>
                 @endif
 
             </ul>
 
             <!-- Right Side Of Navbar -->
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right nb-u">
 
                 <!-- Authentication Links -->
                 @if(Auth::guest())
@@ -47,15 +41,17 @@
                         'data-target' => '#login'
                     ]) !!}</li>
                 @else
-                    <li class="dropdown">
+                    <li class="dropdown nb-d">
 
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             {{ Auth::user()->fname }} <span class="caret"></span>
                         </a>
 
-                        <ul class="dropdown-menu" role="menu">
-                            {{--<li class="dropdown-header">Hi</li>
-                            <li class="divider" role="separator"></li>--}}
+                        <ul class="dropdown-menu nb-d-m" role="menu">
+                            <li>{!! Html::link('profile/' . Auth::user()->id . '/timeline', 'Profile') !!}</li>
+                            <li>{!! Html::link('users', 'Manage Users') !!}</li>
+                            {{--<li class="dropdown-header">Hi</li>--}}
+                            <li class="divider" role="separator"></li>
                             <li>{!! Html::link('logout', 'Logout') !!}</li>
                         </ul>
 
