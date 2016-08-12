@@ -8,6 +8,7 @@ use Session;
 use App\Post;
 use App\Survey;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class HomeController extends Controller
@@ -34,15 +35,13 @@ class HomeController extends Controller
 
     public function home()
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
-        $surveys = Survey::orderBy('created_at', 'desc')->paginate(5);
+        $posts = Post::orderBy('created_at', 'desc')->get();
+        $surveys = Survey::orderBy('created_at', 'desc')->get();
+        $all = $posts->merge($surveys)->sortByDesc('created_at')->chunk(5)->all();
 
-        $total = $posts->total() + $surveys->total();
-        $perPage = $posts->perPage() + $surveys->perPage();
-        $items = array_merge($posts->items(), $surveys->items());
-        $items = collect($items)->sortByDesc('created_at')->all();
+        $chunk = Input::get('page') !== null || Input::get('page') > 1 ? Input::get('page') - 1 : 0;
 
-        $paginator = new LengthAwarePaginator($items, $total, $perPage);
+        $paginator = new LengthAwarePaginator($all[$chunk], count($all), 5);
         $paginator->setPath(request()->getPathInfo());
 
         return view('home')->withActivities($paginator);
@@ -52,15 +51,13 @@ class HomeController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $posts = Post::where('user_id', $id)->paginate(5);
-        $surveys = Survey::where('user_id', $id)->paginate(5);
+        $posts = Post::where('user_id', $id)->orderBy('created_at', 'desc')->get();
+        $surveys = Survey::where('user_id', $id)->orderBy('created_at', 'desc')->get();
+        $all = $posts->merge($surveys)->sortByDesc('created_at')->chunk(5)->all();
 
-        $total = $posts->total() + $surveys->total();
-        $perPage = $posts->perPage() + $surveys->perPage();
-        $items = array_merge($posts->items(), $surveys->items());
-        $items = collect($items)->sortByDesc('created_at')->all();
+        $chunk = Input::get('page') !== null || Input::get('page') > 1 ? Input::get('page') - 1 : 0;
 
-        $paginator = new LengthAwarePaginator($items, $total, $perPage);
+        $paginator = new LengthAwarePaginator($all[$chunk], count($all), 5);
         $paginator->setPath(request()->getPathInfo());
 
         return view('users.profile_timeline')->withUser($user)->withActivities($paginator);

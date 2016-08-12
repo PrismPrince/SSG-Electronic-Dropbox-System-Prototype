@@ -9,7 +9,7 @@
 
     @yield('content')
 
-    @include('partials._footer')
+    {{--@include('partials._footer')--}}
 
 </body>
 

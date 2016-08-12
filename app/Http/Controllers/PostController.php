@@ -9,6 +9,7 @@ use Session;
 use App\Post;
 use Validator;
 use Carbon\Carbon;
+use Illuminate\Http\Response;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -51,16 +52,6 @@ class PostController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('posts.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -71,6 +62,7 @@ class PostController extends Controller
         $rules = [
             'title' => 'required|regex:/[\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}/|max:255',
             'desc' => 'required',
+            'image' => 'image|max:20000',
         ];
 
         $messages = [
@@ -78,11 +70,15 @@ class PostController extends Controller
             'title.regex' => 'Some characters are not accepted!',
             'title.max' => 'Maximum of 255 characters only!',
             'desc.required' => 'Please enter the description!',
+            'image.image' => 'File must be an image!',
+            'image.max' => 'File too large!',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->fails()) return redirect('home')->withErrors($validator)->withInput();
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        }
         else {
             $post = new Post;
             $post->user_id = Auth::user()->id;
@@ -90,14 +86,17 @@ class PostController extends Controller
             $post->desc = trim($request->desc);
             $post->save();
 
-            if($this->upload($request, $post->id)) {
-                Session::flash('success', 'Your post was successfully posted.');
-            } else {
-                Session::flash('error', 'Unable to upload photo.');
-                return redirect('home')->withInput();
+            if($request->hasFile('image')) {
+                $image = new FileController;
+                
+                if(!$image->postImage($request, 'post', $post->id)) {
+                    Session::flash('error', 'Error uploading photo!');
+                    return back();
+                }
             }
+
+            return back();
         }
-        return redirect('home');
     }
 
     /**
@@ -213,7 +212,7 @@ class PostController extends Controller
             $handle->file_new_name_body = $id;
             $handle->file_new_name_ext = 'x';
             
-            $handle->Process(storage_path('app/public/posts'));
+            $handle->Process(storage_path('app/public/images/posts'));
             
             if($handle->processed){
                 $handle->Clean();

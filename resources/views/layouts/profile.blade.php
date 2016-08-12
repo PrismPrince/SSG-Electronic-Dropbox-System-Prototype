@@ -11,15 +11,17 @@
 
             @include('partials._profile_head')
 
-            <div class="row">
+            <div id="p-c-a" class="row">
                 <div class="col-sm-12">
                     
                     @include('partials._profile_aside')
-
                     <div class="col-sm-8">
-                        @yield('p-c')
-                        @yield('p-con')
-                        @yield('paginator')
+                        <div class="">
+                            @yield('p-c')
+                        </div>
+                        @include('partials._modal_activity')
+                        <div class="activities"></div>
+                        <div class="text-center more-activities"></div>
                     </div>
                 </div>
             </div>

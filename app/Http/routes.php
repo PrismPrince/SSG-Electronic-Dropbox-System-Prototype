@@ -11,26 +11,10 @@
 |
 */
 
-// auth (admin and moderator owns the same view)
-Route::get('posts/me', ['as' => 'posts.me', 'uses' => 'PostController@me']); // done
-Route::get('posts/other', ['as' => 'posts.other', 'uses' => 'PostController@other']); // done
-Route::resource('posts', 'PostController'); // done
-Route::get('profile/{id}/timeline', ['as' => 'profile.timeline', 'uses' => 'UserController@profileTimeline']);
-Route::get('profile/{id}/about', ['as' => 'profile.about', 'uses' => 'UserController@profileAbout']);
-Route::get('profile/{id}/posts', ['as' => 'profile.posts', 'uses' => 'UserController@profilePosts']);
-Route::get('profile/{id}/surveys', ['as' => 'profile.surveys', 'uses' => 'UserController@profileSurveys']);
-
-// admin
-Route::get('admin', 'HomeController@admin'); // done
-Route::get('users/moderator', ['as' => 'users.moderator','uses' => 'UserController@moderator']); // done
-Route::get('users/admin', ['as' => 'users.admin','uses' => 'UserController@admin']); // done
+Route::resource('posts', 'PostController', ['except' => ['create']]); // done
 Route::resource('users', 'UserController'); // done
-//Route::get('admin/survey/{id}/result', 'ResultController@getResult');
-
-// moderator
-Route::get('moderator', 'HomeController@moderator'); // done
+Route::resource('surveys', 'SurveyController', ['except' => ['create']]);
 Route::resource('suggestions', 'SuggestionController', ['only' => ['index', 'show', 'destroy']]); // done
-//Route::resource('moderator/surveys', 'SurveyController');
 
 // password reset
 Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
@@ -42,6 +26,19 @@ Route::get('login', 'Auth\AuthController@showLoginForm');
 Route::post('login', 'Auth\AuthController@login');
 Route::get('logout', 'Auth\AuthController@logout');
 
+// profile
+Route::get('profile/{id}/timeline', 'UserController@profileTimeline');
+
+// images
+Route::get('images/{folder}/{id}', 'FileController@getImage');
+Route::post('images/{folder}/{id}', 'FileController@postImage');
+
+// ajax
+Route::get('ajax/create/{view}', 'AjaxController@getCreate');
+Route::post('ajax/create/{view}', 'AjaxController@postCreate');
+Route::get('ajax/show/{view}', 'AjaxController@getShow');
+Route::get('ajax/{activity}/{id}', 'AjaxController@getActivity');
+
 // students
 Route::get('/', 'HomeController@index'); // done
 Route::get('home', 'HomeController@home'); // done
@@ -50,7 +47,6 @@ Route::post('vote/{id}', 'SurveyController@vote'); // done
 Route::get('surveys/active', ['as' => 'surveys.active', 'uses' => 'SurveyController@active']);
 Route::get('surveys/pending', ['as' => 'surveys.pending', 'uses' => 'SurveyController@pending']);
 Route::get('surveys/expired', ['as' => 'surveys.expired', 'uses' => 'SurveyController@expired']);
-Route::resource('surveys', 'SurveyController');
 
 // register (admin)		may not be importantbecause of the users controller
 // Route::get('admin/register', 'Auth\AuthController@showRegistrationForm');

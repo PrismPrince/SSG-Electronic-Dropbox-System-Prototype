@@ -8,6 +8,8 @@
 
     {!! Html::style('css/bootstrap.min.css') !!}
     <!--{!! Html::style('css/bootstrap-theme.min.css') !!}-->
+    {!! Html::style('css/cropper.min.css') !!}
+    {!! Html::style('css/datetimepicker.min.css') !!}
     {!! Html::style('css/custom.css') !!}
     {!! Html::style('https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700') !!}
 
@@ -42,15 +44,20 @@
         .nb-brnd:hover, .nb-brnd:focus {
             color: #fff;
         }
-        
     </style>
 
     @yield('styles')
 
     {!! Html::script('js/jquery.min.js') !!}
     {!! Html::script('js/bootstrap.min.js') !!}
-    {!! Html::script('js/validator.min.js') !!}
     {!! Html::script('js/momentjs.js') !!}
+    {!! Html::script('js/datetimepicker.min.js') !!}
+    {!! Html::script('js/validator.min.js') !!}
+    {!! Html::script('js/cropper.min.js') !!}
+
+    <script type="text/javascript">
+        
+    </script>
 
     @yield('scripts')
 </head>

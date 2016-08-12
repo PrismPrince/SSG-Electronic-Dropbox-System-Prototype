@@ -4,31 +4,18 @@
 
             <!-- Collapsed Hamburger -->
             <button type="button" class="navbar-toggle nb-btn collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span class="sr-only">Toggle Navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
             </button>
 
             <!-- Branding Image -->
             {!! Html::link('/', 'Prism', ['class' => 'navbar-brand nb-brnd']) !!}
-
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
+
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav nb-m-l">
-
-                    <li>{!! Html::link('home', 'Home') !!}</li>
-                @if(Auth::guest())
-                    <li>{!! Html::link('suggest/create', 'Suggest') !!}</li>
-                    <li>{!! Html::link('surveys', 'Surveys') !!}</li>
-                @elseif(Auth::user()->role == 'admin')
-                    <li>{!! Html::link('suggestions', 'Suggestions') !!}</li>
-                @elseif(Auth::user()->role == 'moderator')
-                    <li>{!! Html::link('suggestions', 'Suggestions') !!}</li>
-                @endif
-
+                <li>{!! Html::link('home', 'Home') !!}</li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -66,7 +53,7 @@
 
 @if(Auth::guest())
 
-    @if($errors->has())
+    @if($errors->any())
         <script type="text/javascript">
             $(document).ready(function(){
                 $('#login.login').modal('show');

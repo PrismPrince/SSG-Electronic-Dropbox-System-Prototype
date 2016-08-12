@@ -20,7 +20,7 @@ class SurveyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);        
+        $this->middleware('auth', ['only' => ['store', 'edit', 'update', 'destroy']]);        
         $this->middleware('guest', ['only' => ['vote']]);
 
         $surveys = Survey::all();
@@ -115,55 +115,19 @@ class SurveyController extends Controller
         return view('surveys.index')->withSurveys($surveys)->withVotes($votes)->withCount($count);
     }
 
-    public function create()
-    {
-        return view('surveys.create');
-    }
-
     public function store(Request $request)
     {
-        $answers = collect($request->answers)->filter(function($answer){
-            $answer = trim($answer);
-            return $answer != '';
+        $request->answers = collect($request->answers)->filter(function($answer){
+            return trim($answer) != '';
         });
-
-        if ($answers->isEmpty()) {
-
-            Session::flash('error_ans', 'Invalid answers!');
-            return view('surveys/create')
-                ->withTitle($request->title)
-                ->withDesc($request->desc)
-                ->withSm($request->sm)
-                ->withSd($request->sd)
-                ->withSy($request->sy)
-                ->withSh($request->sh)
-                ->withSmin($request->smin)
-                ->withSap($request->sap)
-                ->withEm($request->em)
-                ->withEd($request->ed)
-                ->withEy($request->ey)
-                ->withEh($request->eh)
-                ->withEmin($request->emin)
-                ->withEap($request->eap)
-                ->withType($request->type);
-        }
 
         $rules = [
             'title' => 'required|regex:/[\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}/|max:255',
             'desc' => 'required',
             'type' => 'required',
-            'sm' => 'required|numeric|max:12',
-            'sd' => 'required|numeric|max:31',
-            'sy' => 'required|numeric|max:2050',
-            'sh' => 'numeric|max:12',
-            'smin' => 'numeric|max:59',
-            'sap' => 'regex:/[AaPp][Mm]/|max:2',
-            'em' => 'required|numeric|max:12',
-            'ed' => 'required|numeric|max:31',
-            'ey' => 'required|numeric|max:2050',
-            'eh' => 'numeric|max:12',
-            'emin' => 'numeric|max:59',
-            'eap' => 'regex:/[AaPp][Mm]/|max:2',
+            'start' => 'required|date|after:' . new Carbon,
+            'end' => 'required|date|after:' . Carbon::parse($request->start),
+            'answers.*' => 'required_without:answers.0,answers.1|regex:/[\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,25}/|max:25'
         ];
 
         $messages = [
@@ -172,122 +136,57 @@ class SurveyController extends Controller
             'title.max' => 'Maximum of 255 characters only!',
             'desc.required' => 'Please enter the description!',
             'type.required' => 'Please select one option!',
-            'sm.*' => 'Please enter a valid date!',
-            'sd.*' => 'Please enter a valid date!',
-            'sy.*' => 'Please enter a valid date!',
-            'sh.*' => 'Please enter a valid time!',
-            'smin.*' => 'Please enter a valid time!',
-            'sap.*' => 'Please enter a valid time!',
-            'em.*' => 'Please enter a valid date!',
-            'ed.*' => 'Please enter a valid date!',
-            'ey.*' => 'Please enter a valid date!',
-            'eh.*' => 'Please enter a valid time!',
-            'emin.*' => 'Please enter a valid time!',
-            'eap.*' => 'Please enter a valid time!',
+            'start.required' => 'Please enter a valid date!',
+            'start.date' => 'Please enter a valid date!',
+            'start.after' => 'Please enter time after now!',
+            'end.required' => 'Please enter a valid date!',
+            'end.date' => 'Please enter a valid date!',
+            'end.after' => 'Please enter time after the start time!',
+            'answers.*.required_without' => 'Please enter atleast two possible answers!',
+            'answers.*.regex' => 'Some characters are not accepted!',
+            'answers.*.max' => 'Maximum of 25 characters only!',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->fails()) return view('surveys.create')
-            ->withTitle($request->title)
+        if ($validator->fails()) return dd($validator);// back()
+/*            ->withTitle($request->title)
             ->withDesc($request->desc)
-            ->withSm($request->sm)
-            ->withSd($request->sd)
-            ->withSy($request->sy)
-            ->withSh($request->sh)
-            ->withSmin($request->smin)
-            ->withSap($request->sap)
-            ->withEm($request->em)
-            ->withEd($request->ed)
-            ->withEy($request->ey)
-            ->withEh($request->eh)
-            ->withEmin($request->emin)
-            ->withEap($request->eap)
+            ->withStart($request->start)
+            ->withEnd($request->end)
             ->withType($request->type)
-            ->withErrors($validator);
+            ->withErrors($validator);*/
         else {
-            $sm = trim($request->sm) == '' ? 1 : trim($request->sm);
-            $sd = trim($request->sd) == '' ? 1 : trim($request->sd);
-            $sy = trim($request->sy) == '' ? 2000 : trim($request->sy);
-            $sh = trim($request->sh) == '' ? 0 : trim($request->sh);
-            $smin = trim($request->smin) == '' ? 0 : trim($request->smin);
-
-            $sh = ($request->sap == 'am' || $request->sap == 'AM') ? $sh : (($request->sap == 'pm' || $request->sap == 'PM') ? $sh + 12 : $sh);
-
-            $start = "$sy-$sm-$sd $sh:$smin:00";
-
-
-            $em = trim($request->em) == '' ? 1 : trim($request->em);
-            $ed = trim($request->ed) == '' ? 1 : trim($request->ed);
-            $ey = trim($request->ey) == '' ? 2000 : trim($request->ey);
-            $eh = trim($request->eh) == '' ? 0 : trim($request->eh);
-            $emin = trim($request->emin) == '' ? 0 : trim($request->emin);
-
-            $eh = ($request->eap == 'am' || $request->eap == 'AM') ? $eh : (($request->eap == 'pm' || $request->eap == 'PM') ? $eh + 12 : $eh);
-
-            $end = "$ey-$em-$ed $eh:$emin:00";
-
-            if (strtotime($start) <= time()) {
-                $errors['start'] = 'Starting date must not beyond current date and time!';
-                return view('surveys/create')
-                    ->withTitle($request->title)
-                    ->withDesc($request->desc)
-                    ->withSm($request->sm)
-                    ->withSd($request->sd)
-                    ->withSy($request->sy)
-                    ->withSh($request->sh)
-                    ->withSmin($request->smin)
-                    ->withSap($request->sap)
-                    ->withEm($request->em)
-                    ->withEd($request->ed)
-                    ->withEy($request->ey)
-                    ->withEh($request->eh)
-                    ->withEmin($request->emin)
-                    ->withEap($request->eap)
-                    ->withType($request->type)
-                    ->withErrors($errors);
-            } elseif (strtotime($end) <= strtotime($start)) {
-                $errors['end'] = 'End date must not beyond the starting date and time!';
-                return view('surveys/create')
-                    ->withTitle($request->title)
-                    ->withDesc($request->desc)
-                    ->withSm($request->sm)
-                    ->withSd($request->sd)
-                    ->withSy($request->sy)
-                    ->withSh($request->sh)
-                    ->withSmin($request->smin)
-                    ->withSap($request->sap)
-                    ->withEm($request->em)
-                    ->withEd($request->ed)
-                    ->withEy($request->ey)
-                    ->withEh($request->eh)
-                    ->withEmin($request->emin)
-                    ->withEap($request->eap)
-                    ->withType($request->type)
-                    ->withErrors($errors);
-            }
-
             $survey = new Survey;
             $survey->user_id = Auth::user()->id;
             $survey->title = trim($request->title);
             $survey->desc = trim($request->desc);
-            $survey->start = $start;
-            $survey->end = $end;
+            $survey->start = date('Y-m-d H:m:s', strtotime($request->start));
+            $survey->end = date('Y-m-d H:m:s', strtotime($request->end));
             $survey->status = trim($request->status);
             $survey->type = trim($request->type);
             $survey->save();
 
-            foreach ($answers as $answer) {
+            foreach ($request->answers as $answer) {
                 $option = new Option;
                 $option->survey_id = $survey->id;
                 $option->answer = $answer;
                 $option->save();
             }
+
+            if($request->hasFile('image')) {
+                $image = new FileController;
+                
+                if(!$image->postImage($request, 'survey', $survey->id)) {
+                    Session::flash('error', 'Error uploading photo!');
+                    return back();
+                }
+            }
         }
 
         Session::flash('success', 'Your survey was successfully created.');
 
-        return redirect()->route('surveys.show', $survey->id);
+        return back();
     }
 
     public function show($id)
