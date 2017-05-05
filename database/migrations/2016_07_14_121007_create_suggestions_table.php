@@ -17,7 +17,7 @@ class CreateSuggestionsTable extends Migration
             $table->integer('student_id')->unsigned();
             $table->string('title');
             $table->string('addressed_to');
-            $table->text('message');
+            $table->text('desc');
             $table->timestamps();
         });
     }
@@ -30,5 +30,4 @@ class CreateSuggestionsTable extends Migration
     public function down()
     {
         Schema::drop('suggestions');
-    }
-}
+    }}

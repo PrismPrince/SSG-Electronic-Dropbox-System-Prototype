@@ -5,7 +5,7 @@
                 {!! Form::button('&times;', ['class' => 'close', 'data-dismiss' => 'modal', 'aria-hidden' => 'true']) !!}
                 <div class="modal-title"></div>
             </div>
-            <div class="modal-body">
+            <div class="modal-body clearfix">
             </div>
         </div>
     </div>

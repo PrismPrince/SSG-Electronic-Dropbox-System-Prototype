@@ -177,7 +177,7 @@ class SurveyController extends Controller
             if($request->hasFile('image')) {
                 $image = new FileController;
                 
-                if(!$image->postImage($request, 'survey', $survey->id)) {
+                if(!$image->postImage($request, 'surveys', $survey->id)) {
                     Session::flash('error', 'Error uploading photo!');
                     return back();
                 }

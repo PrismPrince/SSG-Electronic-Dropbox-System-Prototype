@@ -57,7 +57,7 @@ class SuggestionController extends Controller
             'lname' => 'required|exists:students,lname,id,' . $request->student_id,
             'title' => 'required|regex:/[\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}/|max:255',
             'addressed_to' => 'required|regex:/[\s\_\-\:\.\,\?\\\\\/\'\"\%\&\#\@\!\(\)0-9A-zÑñ]{1,255}/|max:255',
-            'message' => 'required',
+            'desc' => 'required',
         ];
 
         $messages = [
@@ -74,7 +74,7 @@ class SuggestionController extends Controller
             'addressed_to.required' => 'Please enter the title!',
             'addressed_to.regex' => 'Some characters are not accepted!',
             'addressed_to.max' => 'Maximum of 255 characters only!',
-            'message.required' => 'Please enter the messageription!',
+            'desc.required' => 'Please enter the messageription!',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -88,7 +88,7 @@ class SuggestionController extends Controller
             $suggestion->student_id = trim($request->student_id);
             $suggestion->title = trim($request->title);
             $suggestion->addressed_to = trim($request->addressed_to);
-            $suggestion->message = trim($request->message);
+            $suggestion->desc = trim($request->desc);
             $suggestion->save();
 
             Session::flash('success', 'Your suggestion was successfully send.');

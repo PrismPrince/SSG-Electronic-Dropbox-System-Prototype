@@ -18,8 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SuggestionsTableSeeder::class);
         $this->call(StudentsTableSeeder::class);
         $this->call(OptionStudentTableSeeder::class);
-        //$this->call(UserStatusTableSeeder::class);
-        //$this->call(SurveyStatusTableSeeder::class);
     }
 }
 
@@ -512,7 +510,7 @@ class SuggestionsTableSeeder extends Seeder
 	        'student_id' => 1132352, // on:students
 	        'title' => 'Some title that attracts the officers?',
 	        'addressed_to' => 'PTA',
-	        'message' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla id nisi perspiciatis, magnam expedita cum porro aut molestias accusantium praesentium optio magni explicabo. Laboriosam impedit rerum est, voluptatibus explicabo optio.',
+	        'desc' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla id nisi perspiciatis, magnam expedita cum porro aut molestias accusantium praesentium optio magni explicabo. Laboriosam impedit rerum est, voluptatibus explicabo optio.',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -521,7 +519,7 @@ class SuggestionsTableSeeder extends Seeder
 	        'student_id' => 1142793, // on:students
 	        'title' => 'Pangutana pa ni?',
 	        'addressed_to' => 'SSG Pres',
-	        'message' => 'Nulla id nisi perspiciatis, magnam expedita cum porro aut molestias accusantium praesentium optio magni explicabo. Laboriosam impedit rerum est, voluptatibus explicabo optio.',
+	        'desc' => 'Nulla id nisi perspiciatis, magnam expedita cum porro aut molestias accusantium praesentium optio magni explicabo. Laboriosam impedit rerum est, voluptatibus explicabo optio.',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);
@@ -530,7 +528,7 @@ class SuggestionsTableSeeder extends Seeder
 	        'student_id' => 1142793, // on:students
 	        'title' => 'Pangutana pa ni?',
 	        'addressed_to' => 'SSG Pres',
-	        'message' => 'Naa pay sling? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla id nisi perspiciatis, magnam expedita cum porro aut molestias accusantium praesentium optio magni explicabo. Laboriosam impedit rerum est, voluptatibus explicabo optio.',
+	        'desc' => 'Naa pay sling? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla id nisi perspiciatis, magnam expedita cum porro aut molestias accusantium praesentium optio magni explicabo. Laboriosam impedit rerum est, voluptatibus explicabo optio.',
 	        'created_at' => date('Y-m-d H:i:s', time()),
 	        'updated_at' => date('Y-m-d H:i:s', time()),
         ]);

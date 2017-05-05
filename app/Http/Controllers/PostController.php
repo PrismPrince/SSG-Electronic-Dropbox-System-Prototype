@@ -86,10 +86,11 @@ class PostController extends Controller
             $post->desc = trim($request->desc);
             $post->save();
 
+
             if($request->hasFile('image')) {
                 $image = new FileController;
                 
-                if(!$image->postImage($request, 'post', $post->id)) {
+                if(!$image->postImage($request, 'posts', $post->id)) {
                     Session::flash('error', 'Error uploading photo!');
                     return back();
                 }

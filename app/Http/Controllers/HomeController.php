@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Session;
 use App\Post;
 use App\Survey;
+use App\Suggestion;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\LengthAwarePaginator;

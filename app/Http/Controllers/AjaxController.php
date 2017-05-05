@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Carbon\Carbon;
 use App\Post;
 use App\Survey;
 use Illuminate\Http\Response;
@@ -13,6 +14,18 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class AjaxController extends Controller
 {
+    public function __construct()
+    {
+        $surveys = Survey::all();
+        $surveys->each(function ($item, $key)
+        {
+            if ($item->start > Carbon::now()) $item->status = 'pending';
+            elseif ($item->start <= Carbon::now() && $item->end >= Carbon::now()) $item->status = 'active';
+            elseif ($item->end < Carbon::now()) $item->status = 'expired';
+            else $item->status = 'expired';
+            $item->save();
+        });
+    }
     public function getShow($view)
     {
         switch ($view) {
@@ -54,15 +67,21 @@ class AjaxController extends Controller
     {
         switch ($type) {
             case 'post':
-                $post = Post::findOrFail($id);
-                $head = view('ajax.activity_head')->withActivity($post)->render();
-                $body = view('ajax.activity_body')->withActivity($post)->render();
-                return response()->json(['head' => $head, 'body' => $body]);
+                $info = Post::findOrFail($id);
+                break;
+            case 'survey':
+                $info = Survey::findOrFail($id);
+                break;
+            case 'suggestion':
+                $info = Suggestion::findOrFail($id);
                 break;
             default:
                 # code...
                 break;
         }
+        $head = view('ajax.activity_head')->withActivity($info)->render();
+        $body = view('ajax.activity_body')->withActivity($info)->render();
+        return response()->json(['head' => $head, 'body' => $body]);
     }
 
     public function getCreate($view)
@@ -80,7 +99,7 @@ class AjaxController extends Controller
     			$this->createSuggestion();
     			break;
     		default:
-    			return view('');
+    			return view('errors/404');
     			break;
     	}
     }
